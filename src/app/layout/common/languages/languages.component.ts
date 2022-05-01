@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { take } from 'rxjs';
-import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
+import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
+import { take } from 'rxjs';
 
 @Component({
     selector       : 'languages',
@@ -52,7 +52,8 @@ export class LanguagesComponent implements OnInit, OnDestroy
         // Set the country iso codes for languages for flags
         this.flagCodes = {
             'en': 'us',
-            'tr': 'tr'
+            'tr': 'tr',
+            'es': 'es'
         };
     }
 

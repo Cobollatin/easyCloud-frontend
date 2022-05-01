@@ -1,7 +1,7 @@
-import { Translation, TRANSLOCO_CONFIG, TRANSLOCO_LOADER, translocoConfig, TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { environment } from 'environments/environment';
+import { Translation, translocoConfig, TranslocoModule, TranslocoService, TRANSLOCO_CONFIG, TRANSLOCO_LOADER } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from 'app/core/transloco/transloco.http-loader';
+import { environment } from 'environments/environment';
 
 @NgModule({
     exports  : [
@@ -13,6 +13,10 @@ import { TranslocoHttpLoader } from 'app/core/transloco/transloco.http-loader';
             provide : TRANSLOCO_CONFIG,
             useValue: translocoConfig({
                 availableLangs      : [
+                    {
+                        id   : 'es',
+                        label: 'Español'
+                    },
                     {
                         id   : 'en',
                         label: 'English'

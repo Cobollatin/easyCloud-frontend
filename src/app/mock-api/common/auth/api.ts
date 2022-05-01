@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import Base64 from 'crypto-js/enc-base64';
-import HmacSHA256 from 'crypto-js/hmac-sha256';
-import Utf8 from 'crypto-js/enc-utf8';
-import { cloneDeep } from 'lodash-es';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { user as userData } from 'app/mock-api/common/user/data';
+import Base64 from 'crypto-js/enc-base64';
+import Utf8 from 'crypto-js/enc-utf8';
+import HmacSHA256 from 'crypto-js/hmac-sha256';
+import { cloneDeep } from 'lodash-es';
 
 @Injectable({
     providedIn: 'root'
@@ -67,7 +67,7 @@ export class AuthMockApi
             .reply(({request}) => {
 
                 // Sign in successful
-                if ( request.body.email === 'hughes.brian@company.com' && request.body.password === 'admin' )
+                if ( request.body.email === 'john.doe@company.com' && request.body.password === 'admin' )
                 {
                     return [
                         200,

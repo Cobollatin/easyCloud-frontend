@@ -70,6 +70,13 @@
                     [name]="name"></fuse-vertical-navigation-basic-item>
             </ng-container>
 
+            <!-- Basic Violet -->
+            <ng-container *ngIf="item.type === 'basic-btn'">
+                <fuse-vertical-navigation-basic-item
+                    [item]="item"
+                    [name]="name"></fuse-vertical-navigation-basic-item>
+            </ng-container>
+
             <!-- Collapsable -->
             <ng-container *ngIf="item.type === 'collapsable'">
                 <fuse-vertical-navigation-collapsable-item

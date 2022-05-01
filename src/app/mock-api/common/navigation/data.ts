@@ -8,6 +8,26 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
+    },
+    {
+        id   : 'profile',
+        title: 'Mi Perfil',
+        type : 'basic',
+        icon : 'heroicons_outline:profile',
+        link : '/profile'
+    },
+    {
+        id   : 'quotes',
+        title: 'Mis Cotizaciones',
+        type : 'basic',
+        icon : 'heroicons_outline:recent',
+        link : '/quotes'
+    },
+    {
+        id   : 'pricing',
+        title: 'Potenciar mi Cuenta',
+        type : 'basic',
+        link : '/pricing'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
