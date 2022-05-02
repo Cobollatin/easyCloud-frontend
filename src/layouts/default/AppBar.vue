@@ -21,16 +21,53 @@
       class="font-weight-light text-h5"
       v-text="name"
     />
-
     <v-spacer />
-
-    <default-search class="hidden-sm-and-down" />
-
-    <default-go-home />
-
-    <default-notifications />
-
-    <default-account />
+    <template>
+      <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="290"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="blue darken-4"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon class="mr-2">
+              mdi-logout
+            </v-icon>
+            LogOut
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title class="text-h5">
+            <v-spacer />
+            Are you sure to logout?
+            <v-spacer />
+          </v-card-title>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              color="blue darken-2"
+              text
+              @click="dialog = false"
+            >
+              Yes
+            </v-btn>
+            <v-btn
+              color="blue darken-2"
+              text
+              @click="dialog = false"
+            >
+              No
+            </v-btn>
+            <v-spacer />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </template>
   </v-app-bar>
 </template>
 
@@ -43,24 +80,10 @@
 
     components: {
       DefaultAccount: () => import(
-        /* webpackChunkName: "default-account" */
         './widgets/Account'
       ),
       DefaultDrawerToggle: () => import(
-        /* webpackChunkName: "default-drawer-toggle" */
         './widgets/DrawerToggle'
-      ),
-      DefaultGoHome: () => import(
-        /* webpackChunkName: "default-go-home" */
-        './widgets/GoHome'
-      ),
-      DefaultNotifications: () => import(
-        /* webpackChunkName: "default-notifications" */
-        './widgets/Notifications'
-      ),
-      DefaultSearch: () => import(
-        /* webpackChunkName: "default-search" */
-        './widgets/Search'
       ),
     },
 
@@ -70,6 +93,12 @@
         'mini',
       ]),
       name: get('route/name'),
+    },
+
+    data: function () {
+      return {
+        dialog: false,
+      }
     },
   }
 </script>

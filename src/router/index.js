@@ -20,7 +20,7 @@ const router = new Router({
   },
   routes: [
     layout('Default', [
-      route('Dashboard'),
+      route('Home'),
 
       // Pages
       route('UserProfile', null, 'components/profile'),
