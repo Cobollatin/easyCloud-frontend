@@ -24,11 +24,7 @@
         md="auto"
       >
         <div class="text-body-1 font-weight-light pt-6 pt-md-0 text-center">
-          &copy; {{ (new Date()).getFullYear() }}, Made by <v-icon>mdi-vuetify</v-icon>
-          <a
-            href="https://vuetifyjs.com/en/about/meet-the-team/#company"
-            class="text-decoration-none"
-          >Vuetify</a>
+          &copy; {{ (new Date()).getFullYear() }}, Made by Impact IT
         </div>
       </v-col>
     </v-row>
@@ -42,20 +38,12 @@
     data: () => ({
       links: [
         {
-          href: 'https://vuetifyjs.com/',
-          text: 'Vuetify Docs',
+          href: 'https://www.easycloud.ga/',
+          text: 'About the Product',
         },
         {
-          href: '#',
-          text: 'About Us',
-        },
-        {
-          href: '#',
-          text: 'Blog',
-        },
-        {
-          href: '#',
-          text: 'Licenses',
+          href: 'https://github.com/Cobollatin/easyCloud-frontend/blob/vue/src/views/Dashboard.vue',
+          text: 'Documentation',
         },
       ],
     }),
