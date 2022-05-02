@@ -20,14 +20,10 @@ import { environment } from 'environments/environment';
                     {
                         id   : 'en',
                         label: 'English'
-                    },
-                    {
-                        id   : 'tr',
-                        label: 'Turkish'
                     }
                 ],
-                defaultLang         : 'en',
-                fallbackLang        : 'en',
+                defaultLang         : 'es',
+                fallbackLang        : 'es',
                 reRenderOnLangChange: true,
                 prodMode            : environment.production
             })
