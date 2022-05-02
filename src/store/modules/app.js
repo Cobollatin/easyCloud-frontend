@@ -8,39 +8,34 @@ const state = {
   mini: false,
   items: [
     {
-      title: 'Dashboard',
-      icon: 'mdi-view-dashboard',
+      title: 'Home',
+      icon: 'mdi-home-outline',
       to: '/',
     },
     {
-      title: 'User Profile',
-      icon: 'mdi-account',
-      to: '/components/profile/',
+      title: 'Quotes',
+      icon: 'mdi-text-box-plus-outline',
+      to: '',
     },
     {
-      title: 'Regular Tables',
-      icon: 'mdi-clipboard-outline',
+      title: 'Scalability',
+      icon: 'mdi-chart-line',
+      to: '',
+    },
+    {
+      title: 'My Quotes',
+      icon: 'mdi-clipboard-text-outline',
       to: '/tables/regular/',
     },
     {
-      title: 'Typography',
-      icon: 'mdi-format-font',
-      to: '/components/typography/',
+      title: 'My Account',
+      icon: 'mdi-account-outline',
+      to: '/components/profile/',
     },
     {
-      title: 'Icons',
-      icon: 'mdi-chart-bubble',
-      to: '/components/icons/',
-    },
-    {
-      title: 'Google Maps',
-      icon: 'mdi-map-marker',
-      to: '/maps/google/',
-    },
-    {
-      title: 'Notifications',
-      icon: 'mdi-bell',
-      to: '/components/notifications/',
+      title: 'Upgrade',
+      icon: 'mdi-package-up',
+      to: '',
     },
   ],
 }
