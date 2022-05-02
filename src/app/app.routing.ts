@@ -9,7 +9,7 @@ import { LayoutComponent } from 'app/layout/layout.component';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
 
-    // Redirect empty path to '/example'
+    // Redirect empty path to '/home'
     {path: '', pathMatch : 'full', redirectTo: 'home'},
 
     // Redirect signed in user to the '/example'
@@ -19,6 +19,11 @@ export const appRoutes: Route[] = [
     // location. This is a small convenience to keep all main routes together here on this file.
     {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'home'},
 
+    // Error
+    {path: 'error', children: [
+        {path: '404', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.module').then(m => m.Error404Module)},
+        {path: '500', loadChildren: () => import('app/modules/admin/pages/error/error-500/error-500.module').then(m => m.Error500Module)}
+    ]},
     // Auth routes for guests
     {
         path: '',
@@ -65,6 +70,7 @@ export const appRoutes: Route[] = [
             {path: 'home', loadChildren: () => import('app/modules/admin/pages/home/home.module').then(m => m.HomeModule)},
             {path: 'profile', loadChildren: () => import('app/modules/admin/pages/profile/profile.module').then(m => m.ProfileModule)},
             {path: 'pricing', loadChildren: () => import('app/modules/admin/pages/pricing/pricing.module').then(m => m.PricingModule)},
+            {path: 'quote', loadChildren: () => import('app/modules/admin/pages/quote/quote.module').then(m => m.QuoteModule)},
         ]
     }
 ];
