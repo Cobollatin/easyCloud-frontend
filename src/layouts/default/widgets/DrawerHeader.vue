@@ -1,17 +1,14 @@
 <template>
   <v-list-item class="mb-0 justify-space-between pl-3">
-    <v-list-item-avatar>
-      <v-img
-        :src="
-          require('@/assets/vmd.svg')"
-      />
-    </v-list-item-avatar>
+    <v-img
+      src="../../../../src/assets/logo.png"
+      contain
+      max-width="50"
+    />
 
     <v-list-item-content class="pl-2">
       <v-list-item-title class="text-h3">
-        <strong class="mr-1 font-weight-black">VMD</strong>
-
-        <span class="primary--text">FREE</span>
+        <strong class="mr-1 font-weight-black">EasyCloud</strong>
       </v-list-item-title>
     </v-list-item-content>
   </v-list-item>
