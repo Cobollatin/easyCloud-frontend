@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "dev": "npm run serve",
+    "dev": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "postversion": "node scripts/postversion.js"
@@ -30,7 +30,6 @@
     "archiver": "^4.0.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
-    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-config-vuetify": "^0.6.0",

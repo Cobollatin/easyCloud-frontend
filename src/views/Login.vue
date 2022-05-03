@@ -14,7 +14,7 @@
       }
     },
     async mounted () {
-      const { text } = await (await fetch('/api/message')).json()
+      const { text } = await (await fetch(process.env.VUE_APP_FAKE_API + '/api/FakeAPI')).json()
       this.message = text
     },
   }
