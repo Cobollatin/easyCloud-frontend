@@ -15,6 +15,7 @@
         }
     },
     "navigationFallback": {
-        "redirect": "/error"
+        "rewrite": "/index.html",
+        "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
     }
 }
