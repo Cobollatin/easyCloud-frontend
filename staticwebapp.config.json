@@ -1,0 +1,21 @@
+{
+    "responseOverrides": {
+        "400": {
+            "redirect": "/400"
+        },
+        "401": {
+            "statusCode": 302,
+            "redirect": "/401"
+        },
+        "403": {
+            "redirect": "/403"
+        },
+        "404": {
+            "redirect": "/404"
+        }
+    },
+    "navigationFallback": {
+        "rewrite": "/index.html",
+        "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+    }
+}
