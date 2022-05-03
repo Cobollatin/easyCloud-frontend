@@ -1,10 +1,9 @@
 <template>
-<div>login prueba</div>
+  <div>login prueba</div>
 </template>
 
 <script>
-export default {
-  name: 'LogIn'
-}
+  export default {
+    name: 'Login',
+  }
 </script>
-
