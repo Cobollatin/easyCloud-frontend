@@ -19,22 +19,13 @@ const router = new Router({
     return { x: 0, y: 0 }
   },
   routes: [
+    route('Login', null, '/login'),
     layout('Default', [
       route('Home'),
-
       // Pages
       route('UserProfile', null, 'components/profile'),
-
-      // Components
-      route('Notifications', null, 'components/notifications'),
-      route('Icons', null, 'components/icons'),
-      route('Typography', null, 'components/typography'),
-
-      // Tables
-      route('Regular Tables', null, 'tables/regular'),
-
-      // Maps
-      route('Google Maps', null, 'maps/google'),
+      route('Error', null, '/404'),
+      { path: '/:catchAll(.*)', redirect: '/404' },
     ]),
   ],
 })
