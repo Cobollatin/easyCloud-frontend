@@ -47,6 +47,7 @@
 
 <script>
 
+
 export default {
   name: 'Login',
   components: {},
@@ -61,6 +62,7 @@ export default {
     this.message = text
   },
 }
+
 </script>
 
 <style scoped>
