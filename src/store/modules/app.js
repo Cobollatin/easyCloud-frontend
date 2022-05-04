@@ -15,7 +15,7 @@ const state = {
     {
       title: 'Quotes',
       icon: 'mdi-text-box-plus-outline',
-      to: 'components/quotes',
+      to: 'quotes',
     },
     {
       title: 'Scalability',
@@ -30,7 +30,7 @@ const state = {
     {
       title: 'My Account',
       icon: 'mdi-account-outline',
-      to: '',
+      to: 'components/profile',
     },
     {
       title: 'Upgrade',

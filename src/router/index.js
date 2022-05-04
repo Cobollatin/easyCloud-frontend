@@ -29,7 +29,7 @@ const router = new Router({
       route('Notifications', null, 'components/notifications'),
       route('Icons', null, 'components/icons'),
       route('Typography', null, 'components/typography'),
-      route('Quotes', null, 'components/quotes'),
+      route('Quotes', null, 'quotes'),
 
       // Tables
       route('Regular Tables', null, 'tables/regular'),
