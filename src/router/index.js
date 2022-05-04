@@ -19,25 +19,21 @@ const router = new Router({
     return { x: 0, y: 0 }
   },
   routes: [
-    route('Login', null, '/login'),
+    route('Login', null, '/login/'),
     layout('Default', [
       route('Home'),
       // Pages
-      route('UserProfile', null, 'components/profile'),
-
+      route('UserProfile', null, 'components/profile/'),
       // Components
-      route('Notifications', null, 'components/notifications'),
+      route('Scalability', null, 'components/scalability/'),
+      route('Notifications', null, 'components/notifications/'),
       route('Icons', null, 'components/icons'),
-      route('Typography', null, 'components/typography'),
-      route('Quotes', null, 'quotes'),
+      route('Typography', null, 'components/typography/'),
+      route('Quotes', null, 'components/quotes/'),
 
-      // Tables
-      route('Regular Tables', null, 'tables/regular'),
-
-      // Maps
-      route('Google Maps', null, 'maps/google'),
+      // Error
       route('Error', null, '/404'),
-      { path: '/:catchAll(.*)', redirect: '/404' },
+      { path: ':catchAll(.*)', redirect: '/404' },
     ]),
   ],
 })

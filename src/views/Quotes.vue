@@ -2,9 +2,7 @@
   <v-container fluid>
     <v-row>
       <!--Select Group-->
-      <v-col
-        sm="6"
-      >
+      <v-col sm="6">
         <v-select
           v-model="selectServices"
           :items="services"
@@ -16,9 +14,7 @@
           item-color="blue darken-4"
         />
       </v-col>
-      <v-col
-        sm="6"
-      >
+      <v-col sm="6">
         <v-select
           v-model="selectProviders"
           :items="providers"
