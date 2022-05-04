@@ -15,12 +15,12 @@ const state = {
     {
       title: 'Quotes',
       icon: 'mdi-text-box-plus-outline',
-      to: 'components/quotes',
+      to: '/components/quotes',
     },
     {
       title: 'Scalability',
       icon: 'mdi-chart-line',
-      to: 'components/scalability',
+      to: '/components/scalability',
     },
     {
       title: 'My Quotes',
