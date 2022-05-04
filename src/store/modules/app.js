@@ -25,12 +25,12 @@ const state = {
     {
       title: 'My Quotes',
       icon: 'mdi-clipboard-text-outline',
-      to: '/tables/regular/',
+      to: '',
     },
     {
       title: 'My Account',
       icon: 'mdi-account-outline',
-      to: '/components/profile/',
+      to: '',
     },
     {
       title: 'Upgrade',

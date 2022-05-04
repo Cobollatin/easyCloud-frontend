@@ -42,7 +42,7 @@
           text: 'About the Product',
         },
         {
-          href: 'https://github.com/Cobollatin/easyCloud-frontend/blob/vue/src/views/Dashboard.vue',
+          href: 'https://github.com/Cobollatin/easyCloud-frontend/',
           text: 'Documentation',
         },
       ],
