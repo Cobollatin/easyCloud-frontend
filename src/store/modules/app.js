@@ -15,7 +15,7 @@ const state = {
     {
       title: 'Quotes',
       icon: 'mdi-text-box-plus-outline',
-      to: '',
+      to: 'components/quotes',
     },
     {
       title: 'Scalability',
