@@ -75,9 +75,10 @@
                 @click:append="showPassword = !showPassword"
               />
               <v-btn
-                :disabled="!form"
+                :disabled="false"
                 :loading="isLoading"
                 color="#1976D2"
+                @click="login(email,password)"
               >
                 <span class="wh">Login</span>
               </v-btn>
@@ -92,12 +93,11 @@
         </v-card>
       </v-col>
     </v-row>
-    <DefaultFooter />
   </v-container>
 </template>
 
 <script>
-
+  import axios from 'axios'
   export default {
     name: 'Login',
     components: {},
@@ -117,11 +117,22 @@
       },
     }),
     async mounted () {
-      const { text } = await (await fetch('/api/message')).json()
-      this.message = text
+    },
+    methods: {
+      login: function (email, password) {
+        axios.post(process.env.VUE_APP_FAKE_API + '/api/login', {
+          username: email,
+          password: password,
+        },
+        ).then(response => {
+          if (response.status === 200) {
+            this.$router.push('/')
+          }
+        },
+        )
+      },
     },
   }
-
 </script>
 
 <style scoped>
