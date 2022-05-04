@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "username": "admin@impactIT",
+        "password": "admin@impactIT",
+        "token": "adminToken"
+    },
+    {
+        "id": 2,
+        "username": "empresa@impactIT",
+        "password": "empresa@impactIT",
+        "token": "empresaToken"
+    },
+    {
+        "id": 3,
+        "username": "usuario@impactIT",
+        "password": "usuario@impactIT",
+        "token": "usuarioToken"
+    }
+]
