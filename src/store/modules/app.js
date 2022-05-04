@@ -20,7 +20,7 @@ const state = {
     {
       title: 'Scalability',
       icon: 'mdi-chart-line',
-      to: '',
+      to: 'components/scalability',
     },
     {
       title: 'My Quotes',
