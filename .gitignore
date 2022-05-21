@@ -46,6 +46,10 @@ package-lock.json
 api
 api/*
 /typings
+yarn.lock
+.env
+.env.local
+.env.*.local
 
 # System Files
 .DS_Store
