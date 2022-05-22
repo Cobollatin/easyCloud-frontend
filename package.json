@@ -10,10 +10,12 @@
     "postversion": "node scripts/postversion.js"
   },
   "dependencies": {
+    "@azure/static-web-apps-cli": "^0.8.3",
     "axios": "^0.27.2",
     "vue": "^2.6.11",
     "vue-meta": "^2.3.3",
     "vue-router": "^3.1.6",
+    "vue-toast": "^3.1.0",
     "vuetify": "^2.3.13",
     "vuex": "^3.4.0",
     "vuex-pathify": "^1.4.1",
