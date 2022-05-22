@@ -405,6 +405,12 @@
 </template>
 
 <script>
+
+  import Vue from 'vue'
+
+  const lineSmooth = Vue.chartist.Interpolation.cardinal({
+    tension: 0,
+  })
   export default {
     name: 'QuotesVue',
 
@@ -412,6 +418,7 @@
       return {
         selectServices: '',
         selectProviders: [],
+        emits: ['response'],
         services: [
           'Virtual Machine', 'Serverless', 'Data Base',
         ],

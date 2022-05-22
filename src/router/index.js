@@ -28,8 +28,13 @@ const router = new Router({
       route('Scalability', null, 'components/scalability/'),
       route('Notifications', null, 'components/notifications/'),
       route('Icons', null, 'components/icons'),
+<<<<<<< HEAD
       route('Typography', null, 'components/typography/'),
       route('Quotes', null, 'components/quotes/'),
+=======
+      route('Typography', null, 'components/typography'),
+      route('Quotes', null, 'quotes'),
+>>>>>>> 17bf5eb (fix-appBar)
 
       // Error
       route('Error', null, '/404'),
