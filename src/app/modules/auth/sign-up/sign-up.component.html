@@ -7,7 +7,7 @@
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Registrarse</div>
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>¿Ya tiene un cuenta?</div>
                 <a
@@ -88,20 +88,20 @@
                 </mat-form-field>
 
 
-                <!-- ToS and PP -->
+                <!--  -->
                 <div class="inline-flex items-end w-full mt-1.5">
                     <mat-checkbox
                         [color]="'primary'"
                         [formControlName]="'agreements'">
-                        <span>I agree to the</span>
+                        <span>Estoy deacuerdo con los</span>
                         <a
                             class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Terms of Service
+                            [routerLink]="['./']">Terminos y condiciones
                         </a>
-                        <span>and</span>
+                        <span>y la</span>
                         <a
                             class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Privacy Policy
+                            [routerLink]="['./']">Politica de Privacidad
                         </a>
                     </mat-checkbox>
                 </div>
@@ -114,7 +114,7 @@
                     [disabled]="signUpForm.disabled"
                     (click)="signUp()">
                     <span *ngIf="!signUpForm.disabled">
-                        Create your free account
+                        Crea tu cuenta gratis
                     </span>
                     <mat-progress-spinner
                         *ngIf="signUpForm.disabled"
