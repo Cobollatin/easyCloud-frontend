@@ -71,6 +71,7 @@ export const appRoutes: Route[] = [
             {path: 'profile', loadChildren: () => import('app/modules/admin/pages/profile/profile.module').then(m => m.ProfileModule)},
             {path: 'pricing', loadChildren: () => import('app/modules/admin/pages/pricing/pricing.module').then(m => m.PricingModule)},
             {path: 'quote', loadChildren: () => import('app/modules/admin/pages/quote/quote.module').then(m => m.QuoteModule)},
+            {path: 'my-quotes', loadChildren: () => import('app/modules/admin/pages/my-quotes/my-quotes.module').then(m => m.MyQuotesModule)},
         ]
     }
 ];

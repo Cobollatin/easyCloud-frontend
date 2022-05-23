@@ -21,7 +21,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Mis Cotizaciones',
         type : 'basic',
         icon : 'heroicons_outline:recent',
-        link : '/quote'
+        link : '/my-quotes'
     },
     {
         type : 'divider',
@@ -57,7 +57,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Mis Cotizaciones',
         type : 'basic',
         icon : 'heroicons_outline:recent',
-        link : '/quote'
+        link : '/my-quotes'
     },
     {
         type : 'divider',
@@ -93,7 +93,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         title: 'Mis Cotizaciones',
         type : 'basic',
         icon : 'heroicons_outline:recent',
-        link : '/quote'
+        link : '/my-quotes'
     },
     {
         type : 'divider',
@@ -129,7 +129,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Mis Cotizaciones',
         type : 'basic',
         icon : 'heroicons_outline:recent',
-        link : '/quote'
+        link : '/my-quotes'
     },
     {
         type : 'divider',
