@@ -1,7 +1,6 @@
 <template>
   <v-container fluid>
     <v-row>
-
       <!--Select Group-->
       <v-col sm="6">
         <v-select
@@ -13,8 +12,8 @@
           background-color="#ffffff"
           color="blue darken-4"
           item-color="blue darken-4"
-          @change="verifyUpdateServices()"
           multiple
+          @change="verifyUpdateServices()"
         />
       </v-col>
       <v-col sm="6">
@@ -42,6 +41,7 @@
         <template v-for="serviceSelected in selectServices">
           <v-banner
             v-if="serviceSelected === service"
+            :key="serviceSelected"
             single-line
           >
             <v-card-title
@@ -377,12 +377,21 @@
       </v-card>
 
       <!--Calculate Quote Button-->
-      <v-row justify="end" v-if="selectServices.length > 0">
-        <v-btn class="mb-4 mr-6 mt-5"  color="blue darken-4" dark @click="activeComparativeChart()">
+      <v-row
+        v-if="selectServices.length > 0"
+        justify="end"
+      >
+        <v-btn
+          class="mb-4 mr-6 mt-5"
+          color="blue darken-4"
+          dark
+          @click="activeComparativeChart()"
+        >
           <v-icon class="mr-2">
             mdi-alarm-panel
           </v-icon>
-          Calculate Quote</v-btn>
+          Calculate Quote
+        </v-btn>
         <v-snackbar
           v-model="snackBarDrawer"
           top
@@ -396,23 +405,33 @@
       </v-row>
 
       <!--Comparative chart-->
-      <v-container v-for="selectService in selectServices" v-if="comparativeChartDrawer && selectProviders.length !== 0">
-        <h2 class="mb-1 ml-1 text-h2 font-weight-black"  style="color: #0D47A1">{{ selectService }}</h2>
-        <v-data-table
-          :headers="headers"
-          :items="quotes"
-          class="elevation-1"
+      <div v-if="comparativeChartDrawer && selectProviders.length !== 0">
+        <v-container
+          v-for="selectService in selectServices"
+          :key="selectService"
         >
-          <template v-slot:item.provider="{ item }">
-            <v-chip
-              :color="getColor(item.provider)"
-              dark
-            >
-              {{ item.provider }}
-            </v-chip>
-          </template>
-        </v-data-table>
-      </v-container>
+          <h2
+            class="mb-1 ml-1 text-h2 font-weight-black"
+            style="color: #0D47A1"
+          >
+            {{ selectService }}
+          </h2>
+          <v-data-table
+            :headers="headers"
+            :items="quotes"
+            class="elevation-1"
+          >
+            <template v-slot:item.provider="{ item }">
+              <v-chip
+                :color="getColor(item.provider)"
+                dark
+              >
+                {{ item.provider }}
+              </v-chip>
+            </template>
+          </v-data-table>
+        </v-container>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -430,7 +449,7 @@
     data () {
       return {
         headers: [
-          { text: 'Provider', value: 'provider',},
+          { text: 'Provider', value: 'provider' },
           { text: 'Description', value: 'description' },
           { text: 'Price', value: 'price' },
         ],
@@ -450,9 +469,9 @@
     },
     methods: {
 
-      calculateQuote(){
-        this.quotes = [];
-        this.selectProviders.forEach((provider)=>{
+      calculateQuote () {
+        this.quotes = []
+        this.selectProviders.forEach((provider) => {
           this.quotes.push({
             provider: provider,
             description: 'Google Cloud Tuvi',
@@ -461,15 +480,13 @@
         })
       },
 
-      activeComparativeChart() {
-
-        if(this.selectProviders.length !== 0){
-          this.comparativeChartDrawer = true;
-          this.calculateQuote();
-
-        } else{
-          this.comparativeChartDrawer = false;
-          this.snackBarDrawer = true;
+      activeComparativeChart () {
+        if (this.selectProviders.length !== 0) {
+          this.comparativeChartDrawer = true
+          this.calculateQuote()
+        } else {
+          this.comparativeChartDrawer = false
+          this.snackBarDrawer = true
         }
       },
 
@@ -479,15 +496,15 @@
         else return 'green'
       },
 
-      verifyUpdateProviders(){
-          this.comparativeChartDrawer = false;
+      verifyUpdateProviders () {
+        this.comparativeChartDrawer = false
       },
 
-      verifyUpdateServices(){
-          this.comparativeChartDrawer = false;
+      verifyUpdateServices () {
+        this.comparativeChartDrawer = false
       },
 
-    }
+    },
   }
 
 </script>
