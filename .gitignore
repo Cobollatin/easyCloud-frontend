@@ -32,7 +32,6 @@ yarn.lock
 
 .release-it.json
 now.json
-package-lock.json
 
 .vercel
 
