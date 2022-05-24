@@ -23,19 +23,11 @@ const router = new Router({
     layout('Default', [
       route('Home'),
       // Pages
-      route('UserProfile', null, 'components/profile/'),
-      // Components
-      route('Scalability', null, 'components/scalability/'),
-      route('Notifications', null, 'components/notifications/'),
-      route('Icons', null, 'components/icons'),
-<<<<<<< HEAD
-      route('Typography', null, 'components/typography/'),
-      route('Quotes', null, 'components/quotes/'),
-=======
-      route('Typography', null, 'components/typography'),
+      route('UserProfile', null, 'profile'),
+      route('Scalability', null, 'scalability'),
+      route('Notifications', null, 'notifications'),
       route('Quotes', null, 'quotes'),
->>>>>>> 17bf5eb (fix-appBar)
-
+      // Components
       // Error
       route('Error', null, '/404'),
       { path: ':catchAll(.*)', redirect: '/404' },
