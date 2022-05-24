@@ -15,27 +15,27 @@ const state = {
     {
       title: 'Quotes',
       icon: 'mdi-text-box-plus-outline',
-      to: 'quotes',
+      to: '/quotes',
     },
     {
       title: 'Scalability',
       icon: 'mdi-chart-line',
-      to: '/components/scalability',
+      to: '/scalability',
     },
     {
       title: 'My Quotes',
       icon: 'mdi-clipboard-text-outline',
-      to: '',
+      to: '/hitory',
     },
     {
       title: 'My Account',
       icon: 'mdi-account-outline',
-      to: 'components/profile',
+      to: '/profile',
     },
     {
       title: 'Upgrade',
       icon: 'mdi-package-up',
-      to: '',
+      to: '/upgrade',
     },
   ],
 }

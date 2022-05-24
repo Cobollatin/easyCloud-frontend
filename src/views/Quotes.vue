@@ -1,7 +1,6 @@
 <template>
   <v-container fluid>
     <v-row>
-
       <!--Select Group-->
       <v-col sm="6">
         <v-select
