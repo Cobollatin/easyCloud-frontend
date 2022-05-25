@@ -25,7 +25,7 @@ const state = {
     {
       title: 'My Quotes',
       icon: 'mdi-clipboard-text-outline',
-      to: '/hitory',
+      to: '/myquotes',
     },
     {
       title: 'My Account',
