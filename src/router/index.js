@@ -2,10 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { trailingSlash } from '@/util/helpers'
-import {
-  layout,
-  route,
-} from '@/util/routes'
+import { layout, route } from '@/util/routes'
 
 Vue.use(Router)
 
@@ -19,7 +16,7 @@ const router = new Router({
     return { x: 0, y: 0 }
   },
   routes: [
-    route('Login', null, '/login/'),
+    route('Login', null, 'login'),
     layout('Default', [
       route('Home'),
       // Pages
@@ -27,6 +24,7 @@ const router = new Router({
       route('Scalability', null, 'scalability'),
       route('Notifications', null, 'notifications'),
       route('Quotes', null, 'quotes'),
+      route('MyQuotes', null, 'myquotes'),
       // Components
       // Error
       route('Error', null, '/404'),
@@ -36,6 +34,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('[router] beforeEach', to, from)
   return to.path.endsWith('/') ? next() : next(trailingSlash(to.path))
 })
 
