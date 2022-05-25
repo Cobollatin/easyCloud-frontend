@@ -24,7 +24,7 @@ const router = new Router({
       route('Scalability', null, 'scalability'),
       route('Notifications', null, 'notifications'),
       route('Quotes', null, 'quotes'),
-      route('MyQuotes', null, 'myquotes'),
+      route('My Quotes', null, 'myquotes'),
       // Components
       // Error
       route('Error', null, '/404'),
