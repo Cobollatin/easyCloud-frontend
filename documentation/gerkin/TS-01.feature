@@ -1,0 +1,1 @@
+Feature: Vistas de cotizaciones
