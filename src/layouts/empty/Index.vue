@@ -1,7 +1,5 @@
 <template>
   <v-app>
-    <default-bar />
-    <default-drawer />
     <default-view />
     <default-footer />
   </v-app>
@@ -9,15 +7,9 @@
 
 <script>
   export default {
-    name: 'DefaultLayout',
+    name: 'EmptyLayout',
 
     components: {
-      DefaultBar: () => import(
-        './AppBar'
-      ),
-      DefaultDrawer: () => import(
-        './Drawer'
-      ),
       DefaultFooter: () => import(
         './Footer'
       ),
