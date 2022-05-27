@@ -19,7 +19,7 @@
       <v-col sm="6">
         <v-select
           v-model="selectProviders"
-          :items="providers"
+          :items="providersName"
           :menu-props="{offsetY: true}"
           label="Choose the providers:"
           color="blue darken-4"
@@ -61,7 +61,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="region"
                     label="Region"
                     outlined
                     background-color="#ffffff"
@@ -73,7 +73,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="operationSystem"
                     label="Operating System"
                     outlined
                     color="blue darken-4"
@@ -85,7 +85,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="type"
                     label="Type"
                     outlined
                     background-color="#ffffff"
@@ -97,7 +97,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="tier"
                     label="Tyer"
                     outlined
                     background-color="#ffffff"
@@ -109,7 +109,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="category"
                     label="Category"
                     outlined
                     background-color="#ffffff"
@@ -121,7 +121,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="instanceSeries"
                     label="Instance Series"
                     outlined
                     background-color="#ffffff"
@@ -133,6 +133,7 @@
                   class="ml-10 d-flex"
                 >
                   <v-text-field
+                    v-model="amountMachine"
                     style="width: 700px"
                     outlined
                     background-color="#ffffff"
@@ -143,6 +144,7 @@
                     X
                   </h4>
                   <v-text-field
+                    v-model="amountTime"
                     style="width: 700px"
                     outlined
                     background-color="#ffffff"
@@ -150,7 +152,7 @@
                     color="blue darken-4"
                   />
                   <v-select
-                    :items="providers"
+                    :items="typeDate"
                     label="Period"
                     outlined
                     background-color="#ffffff"
@@ -405,7 +407,9 @@
       </v-row>
 
       <!--Comparative chart-->
-      <div v-if="comparativeChartDrawer && selectProviders.length !== 0">
+      <template
+        v-if="comparativeChartDrawer && selectProviders.length !== 0"
+      >
         <v-container
           v-for="selectService in selectServices"
           :key="selectService"
@@ -431,7 +435,7 @@
             </template>
           </v-data-table>
         </v-container>
-      </div>
+      </template>
     </v-row>
   </v-container>
 </template>
@@ -450,7 +454,6 @@
       return {
         headers: [
           { text: 'Provider', value: 'provider' },
-          { text: 'Description', value: 'description' },
           { text: 'Price', value: 'price' },
         ],
         quotes: [],
@@ -462,9 +465,18 @@
         services: [
           'Virtual Machine', 'Serverless', 'Data Base',
         ],
-        providers: [
+        providersName: [
           'Azure', 'Oracle', 'AWS', 'Alibaba', 'Google', ' IBM',
         ],
+        region: ['Wes Central US', 'Wes US 1', 'Wes US 2'],
+        operationSystem: ['Windows'],
+        type: ['Only', 'BizTalk', 'SQL Server'],
+        tier: ['Standard', 'Basic'],
+        category: ['All', 'Compute optimized', 'General Purpose', 'GPU'],
+        instanceSeries: ['All', 'A-series', 'Bs-series', 'Dsv2-series'],
+        amountMachine: null,
+        amountTime: null,
+        typeDate: ['Days', 'Hours', 'Month'],
       }
     },
     methods: {
@@ -474,8 +486,7 @@
         this.selectProviders.forEach((provider) => {
           this.quotes.push({
             provider: provider,
-            description: 'Google Cloud Tuvi',
-            price: 8000,
+            price: (this.amountMachine * this.amountTime),
           })
         })
       },
@@ -491,9 +502,12 @@
       },
 
       getColor (provider) {
-        if (provider === 'AWS') return 'red'
-        else if (provider === 'Azure') return 'orange'
-        else return 'green'
+        if (provider === 'AWS') return 'orange'
+        else if (provider === 'Azure') return 'blue'
+        else if (provider === 'Oracle') return 'red'
+        else if (provider === 'Alibaba') return 'yellow'
+        else if (provider === 'Google') return 'green'
+        else if (provider === 'IBM') return 'black'
       },
 
       verifyUpdateProviders () {

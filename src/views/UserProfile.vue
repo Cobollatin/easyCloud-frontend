@@ -10,7 +10,7 @@
         md="8"
       >
         <material-card
-          color="primary"
+          color="blue darken-4"
           icon="mdi-account-outline"
         >
           <template #title>
@@ -22,40 +22,10 @@
               <v-row>
                 <v-col
                   cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    disabled
-                    label="Company (disabled)"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="User Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Email Address"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
                   md="6"
                 >
                   <v-text-field
-                    color="purple"
+                    color="blue darken-4"
                     label="First Name"
                   />
                 </v-col>
@@ -65,15 +35,17 @@
                   md="6"
                 >
                   <v-text-field
-                    color="purple"
+                    color="blue darken-4"
                     label="Last Name"
                   />
                 </v-col>
-
-                <v-col cols="12">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-text-field
-                    color="purple"
-                    label="Adress"
+                    color="blue darken-4"
+                    label="User Name"
                   />
                 </v-col>
 
@@ -82,8 +54,8 @@
                   md="4"
                 >
                   <v-text-field
-                    color="purple"
-                    label="City"
+                    color="blue darken-4"
+                    label="Email Address"
                   />
                 </v-col>
 
@@ -92,25 +64,14 @@
                   md="4"
                 >
                   <v-text-field
-                    color="purple"
-                    label="Country"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Postal Code"
-                    type="number"
+                    color="blue darken-4"
+                    label="Phone Number"
                   />
                 </v-col>
 
                 <v-col cols="12">
                   <v-textarea
-                    color="purple"
+                    color="blue darken-4"
                     label="About Me"
                     value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                   />
@@ -121,7 +82,7 @@
                   class="text-right"
                 >
                   <v-btn
-                    color="primary"
+                    color="blue darken-4 white--text"
                     min-width="150"
                   >
                     Update Profile
@@ -138,8 +99,11 @@
         md="4"
       >
         <app-card class="mt-4 text-center">
+          <div class="text-h4 mt-3 mb-3 text--primary">
+            My profile
+          </div>
           <v-img
-            class="rounded-circle elevation-6 mt-n12 d-inline-block"
+            class="rounded-circle elevation-6 mt-n20 d-inline-block"
             src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
             width="128"
           />
@@ -153,18 +117,17 @@
               John Leider
             </h4>
 
+            <h5 class="text-h5 mb-3 text--secondary">
+              example@example.com
+            </h5>
+
             <p class="text--secondary">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem deserunt veniam tempora magnam quisquam quam error iusto cupiditate ducimus, et eligendi saepe voluptatibus assumenda similique temporibus placeat animi dicta?
             </p>
 
-            <v-btn
-              class="mr-0"
-              color="primary"
-              min-width="100"
-              rounded
-            >
-              Follow
-            </v-btn>
+            <h5 class="text-h5 mb-3 text--secondary">
+              987 654 321
+            </h5>
           </v-card-text>
         </app-card>
       </v-col>

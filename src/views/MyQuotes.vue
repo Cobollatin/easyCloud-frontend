@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col sm="6">
+      <v-col sm="3">
         <v-select
           v-model="selectServices"
           :items="services"
@@ -10,10 +10,11 @@
           color="blue darken-4"
           item-color="blue darken-4"
           label="Choose the service:"
+          multiple
           outlined
         />
       </v-col>
-      <v-col sm="6">
+      <v-col sm="3">
         <v-select
           v-model="selectProviders"
           :items="providers"
@@ -26,235 +27,328 @@
           outlined
         />
       </v-col>
-      <!-- Provider Card-->
-      <v-card
-        v-for="provider in providers"
-        :key="providers.indexOf(provider)"
-        class="mx-auto mb-5"
-        width="1030"
-      >
-        <v-banner
-          v-if="
-            selectProviders.indexOf(provider) !== -1 && selectServices !== ''
-          "
-          single-line
-        >
-          <v-card-title
-            class="text-h2 font-weight-black"
-            style="color: #0072C3"
+      <v-col sm="2">
+        <div>
+          <v-menu
+            ref="menuStartDate"
+            v-model="menuStartDate"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
           >
-            {{ provider }}
-            <v-spacer />
-            <v-icon
-              color="blue darken-4"
-              size="50"
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="startDate"
+                label="Start date"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              />
+            </template>
+            <v-date-picker
+              v-model="startDate"
+              :active-picker.sync="activePicker"
+              :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+              min="1950-01-01"
+            />
+          </v-menu>
+        </div>
+      </v-col>
+      <v-col sm="2">
+        <div>
+          <v-menu
+            ref="menuEndDate"
+            v-model="menuEndDate"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="endDate"
+                label="End date"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              />
+            </template>
+            <v-date-picker
+              v-model="endDate"
+              :active-picker.sync="activePicker"
+              :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+              min="1950-01-01"
+            />
+          </v-menu>
+        </div>
+      </v-col>
+      <v-col sm="2">
+        <v-btn
+          v-model="menuStartDate"
+          :close-on-content-click="false"
+          color="blue darken-4"
+          dark
+          outlined
+          @click="search"
+        >
+          Search
+        </v-btn>
+        <v-snackbar
+          v-model="snackBarDrawerEmpty"
+          top
+          timeout="2000"
+          right
+          color="red accent-4"
+          dark
+        >
+          No quotes found!
+        </v-snackbar>
+        <v-snackbar
+          v-model="snackBarDrawer"
+          top
+          timeout="2000"
+          right
+          color="red accent-4"
+          dark
+        >
+          Select providers & services
+        </v-snackbar>
+        <v-snackbar
+          v-model="snackBarDrawerDelete"
+          top
+          timeout="2000"
+          right
+          color="deep-purple accent-4"
+          dark
+        >
+          Delete quote!
+        </v-snackbar>
+      </v-col>
+      <v-expansion-panels
+        v-for="quote in quotesSelected"
+        :key="quotes.indexOf(quote)"
+        multiple
+      >
+        <v-expansion-panel
+          style="margin-top: 15px;"
+        >
+          <v-expansion-panel-header>
+            <v-banner
+              single-line
             >
-              mdi-delete
-            </v-icon>
-          </v-card-title>
-          <template v-if="selectServices === 'Virtual Machine'">
-            <v-row class="mt-10">
-              <v-col
-                class="ml-10"
-                sm="3"
+              <v-card-title
+                class="text-h2 font-weight-black"
+                style="color: #0072C3"
               >
-                <span>Region:
-                  <strong>{{ virtualMachine[0].region }} </strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Operative System:
-                  <strong>{{ virtualMachine[0].os }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Type: <strong>{{ virtualMachine[0].type }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Tyer: <strong>{{ virtualMachine[0].tyer }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Category:
-                  <strong>{{ virtualMachine[0].category }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Instance series:
-                  <strong>{{ virtualMachine[0].instance }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10 d-flex"
-                sm="8"
-              >
-                <span
-                  style="width: 700px"
-                >Virtual Machines:
-                  <strong>{{ virtualMachine[0].vm }}</strong></span>
-                <span
-                  style="width: 700px"
-                >Months: <strong>{{ virtualMachine[0].x }}</strong></span>
-                <span
-                  class="ml-2"
-                >Period: <strong>{{ virtualMachine[0].period }}</strong></span>
-              </v-col>
-              <v-col
-                class="d-flex"
-                sm="3"
-              >
-                <p
-                  style="margin-left: 110px; margin-top: 33px; font-weight: 700"
+                {{ quote.service }}
+                <v-spacer />
+                <v-icon
+                  color="blue darken-4"
+                  size="50"
+                  @click="deleteQuote(quote.id)"
                 >
-                  Price:
-                  <strong>{{ virtualMachine[0].price }}</strong>
-                </p>
-              </v-col>
-            </v-row>
-          </template>
-          <template v-if="selectServices === 'Serverless'">
-            <v-row class="mt-10">
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Region: <strong>{{ serverless[0].region }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Tier: <strong>{{ serverless[0].tier }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Memory Size:
-                  <strong>{{ serverless[0].memorySize }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10 d-flex"
-                sm="7"
-              >
-                <span>Memory Size:
-                  <strong>{{ serverless[0].memorySizeCal }}</strong></span>
-                <span
-                  class="ml-15"
-                  style="width: 300px"
-                >Execution Time:
-                  <strong>{{ serverless[0].executionTime }}</strong></span>
-                <span
-                  style="width: 300px"
-                >Execution Per month:
-                  <strong>{{ serverless[0].executionPerMonth }}</strong></span>
-              </v-col>
-              <v-col
-                class="d-flex"
-                sm="3"
-              >
+                  mdi-delete
+                </v-icon>
+              </v-card-title>
+              <template>
                 <p
-                  style="margin-left: 110px; margin-top: 25px; font-weight: 700"
+                  class="text-h3 font-weight-black"
+                  style="margin-top: 15px; margin-left: 10px;"
                 >
-                  Price: <strong>{{ serverless[0].price }}</strong>
+                  Provider: {{ quote.provider }} -  Date:  {{ quote.date }}
                 </p>
-              </v-col>
-            </v-row>
-          </template>
-          <template v-if="selectServices === 'Data Base'">
-            <v-row class="mt-10">
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Region: <strong> {{ database[0].region }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Type: <strong>{{ database[0].type }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Backup Storage:
-                  <strong>{{ database[0].backupStorage }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Purchase Model:
-                  <strong>{{ database[0].purchaseModel }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Service Tier:
-                  <strong>{{ database[0].serviceTier }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Compute Tier:
-                  <strong>{{ database[0].computeTier }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Hardware Type:
-                  <strong>{{ database[0].hardwareType }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10"
-                sm="3"
-              >
-                <span>Instance: <strong>{{ database[0].instance }}</strong></span>
-              </v-col>
-              <v-col
-                class="ml-10 d-flex"
-                sm="7"
-              >
-                <span
-                  style="width: 500px"
-                >#Instances:
-                  <strong>{{ database[0].numberInstances }}</strong></span>
-                <span
-                  style="width: 500px"
-                >X: <strong>{{ database[0].x }}</strong></span>
-                <span
-                  class="ml-2"
-                >Period: <strong>{{ database[0].period }}</strong></span>
-              </v-col>
-              <v-col
-                class="d-flex"
-                sm="3"
-              >
-                <p
-                  style="margin-left: 110px; margin-top: 25px; font-weight: 700"
-                >
-                  Price: <strong>{{ database[0].price }}</strong>
-                </p>
-              </v-col>
-            </v-row>
-          </template>
-        </v-banner>
-      </v-card>
+              </template>
+            </v-banner>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-container>
+              <template v-if="quote.service === 'Virtual Machine'">
+                <v-row class="mt-10">
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Region: <strong>{{
+                      quote.region
+                    }}
+                    </strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Operative System: <strong>{{ quote.os }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Type: <strong>{{
+                      quote.type
+                    }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Tyer: <strong>{{
+                      quote.tyer
+                    }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Category: <strong>{{
+                      quote.category
+                    }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Instance series: <strong>{{ quote.instance }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="8"
+                    class="ml-10 d-flex"
+                  >
+                    <span style="width: 700px">Virtual Machines: <strong>{{ quote.vm }}</strong></span>
+                    <span style="width: 700px">Months: <strong>{{ quote.x }}</strong></span>
+                    <span style="width: 700px">Period: <strong>{{ quote.period }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="d-flex"
+                  >
+                    <p style="margin-left: 110px; margin-top: 33px; font-weight: 700">
+                      Price:
+                      <strong>{{ quote.price }}</strong>
+                    </p>
+                  </v-col>
+                </v-row>
+              </template>
+              <template v-if="quote.service === 'Serverless'">
+                <v-row class="mt-10">
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Region: <strong>{{ quote.region }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Tier: <strong>{{ quote.tier }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Memory Size: <strong>{{ quote.memorySize }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="7"
+                    class="ml-10 "
+                  >
+                    <span>Memory Size: <strong>{{ quote.memorySizeCal }}</strong></span>
+                    <span
+                      style="width: 300px"
+                      class="ml-15"
+                    >Execution Time: <strong>{{ quote.executionTime }}</strong></span>
+                    <span
+                      style="width: 300px"
+                      class="ml-15"
+                    >Execution Per month: <strong>{{
+                      quote.executionPerMonth
+                    }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="d-flex"
+                  >
+                    <p style="margin-left: 110px; margin-top: 25px; font-weight: 700">
+                      Price: <strong>{{ quote.price }}</strong>
+                    </p>
+                  </v-col>
+                </v-row>
+              </template>
+              <template v-if="quote.service === 'Data Base'">
+                <v-row class="mt-10">
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Region: <strong> {{ quote.region }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Type: <strong>{{ quote.type }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Backup Storage: <strong>{{ quote.backupStorage }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Purchase Model: <strong>{{ quote.purchaseModel }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Service Tier: <strong>{{ quote.serviceTier }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Compute Tier: <strong>{{ quote.computeTier }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Hardware Type: <strong>{{ quote.hardwareType }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="ml-10"
+                  >
+                    <span>Instance: <strong>{{ quote.instance }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="7"
+                    class="ml-10 d-flex"
+                  >
+                    <span style="width: 500px">#Instances: <strong>{{ quote.numberInstances }}</strong></span>
+                    <span style="width: 500px">X: <strong>{{ quote.x }}</strong></span>
+                    <span style="width: 500px">Period: <strong>{{ quote.period }}</strong></span>
+                  </v-col>
+                  <v-col
+                    sm="3"
+                    class="d-flex"
+                  >
+                    <p style="margin-left: 110px; margin-top: 25px; font-weight: 700">
+                      Price: <strong>{{ quote.price }}</strong>
+                    </p>
+                  </v-col>
+                </v-row>
+              </template>
+            </v-container>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-row>
   </v-container>
 </template>
@@ -264,11 +358,20 @@
     name: 'MyQuotes',
     data () {
       return {
-        selectServices: '',
+        activePicker: null,
+        startDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        endDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        menuStartDate: false,
+        menuEndDate: false,
+        selectServices: [],
         selectProviders: [],
-        virtualMachine: [
+        quotes: [
           {
-            name: 'Virtual Machine',
+            service: 'Virtual Machine',
+            provider: 'AWS',
+            description: 'Google Cloud Tuvi',
+            price: 8000,
+            date: '2022-04-20',
             region: 'Region 01',
             os: 'Ubuntu 18.04',
             type: 'Standard',
@@ -278,24 +381,42 @@
             vm: '1',
             x: '1',
             period: '12',
-            price: '$300',
           },
-        ],
-        serverless: [
           {
-            name: 'Serverless',
+            service: 'Virtual Machine',
+            provider: 'Azure',
+            description: 'Google Cloud Tuvi',
+            price: 7000,
+            date: '2022-03-01',
+            region: 'Region 01',
+            os: 'Ubuntu 18.04',
+            type: 'Standard',
+            tyer: 'Tier 01',
+            category: 'Compute',
+            instance: '1',
+            vm: '1',
+            x: '1',
+            period: '12',
+          },
+          {
+            service: 'Serverless',
+            provider: 'AWS',
+            description: 'Google Cloud Tuvi',
+            price: 8000,
+            date: '2022-05-25',
             region: 'Region 01',
             memorySize: '1',
             tier: 'Tier 01',
             memorySizeCal: '1',
             executionTime: '1',
             executionPerMonth: '1',
-            price: '$300',
           },
-        ],
-        database: [
           {
-            name: 'Database',
+            service: 'Data Base',
+            provider: 'AWS',
+            description: 'Google Cloud Tuvi',
+            price: 8000,
+            date: '2022-05-25',
             region: 'Region 01',
             type: 'Standard',
             backupStorage: '1',
@@ -307,13 +428,47 @@
             numberInstances: '1',
             x: '1',
             period: '12',
-            price: '$300',
           },
         ],
+        snackBarDrawerEmpty: false,
+        snackBarDrawer: false,
+        snackBarDrawerDelete: false,
+        quotesSelected: [],
         services: ['Virtual Machine', 'Serverless', 'Data Base'],
         providers: ['Azure', 'Oracle', 'AWS', 'Alibaba', 'Google', ' IBM'],
-        items: ['Region'],
       }
+    },
+    methods: {
+      save (date) {
+        this.$refs.menu.save(date)
+      },
+      search () {
+        this.quotesSelected = []
+        if (this.selectServices.length === 0 || this.selectProviders.length === 0) {
+          this.snackBarDrawer = true
+          setTimeout(() => {
+            this.snackBarDrawer = false
+          }, 3000)
+        } else {
+          this.quotes.forEach(quote => {
+            if (this.selectServices.includes(quote.service) && this.selectProviders.includes(quote.provider) && this.startDate <= quote.date && quote.date <= this.endDate) {
+              this.quotesSelected.push(quote)
+            }
+          })
+        }
+        console.log(this.quotesSelected.length)
+        if (this.quotesSelected.length === 0) {
+          this.snackBarDrawerEmpty = true
+        }
+      },
+      deleteQuote (id) {
+        this.quotesSelected.splice(id, 1)
+        this.quotes.splice(id, 1)
+        this.snackBarDrawerDelete = true
+        if (this.quotes.length === 0) {
+          this.snackBarDrawerEmpty = true
+        }
+      },
     },
   }
 </script>
