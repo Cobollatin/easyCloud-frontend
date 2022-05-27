@@ -25,6 +25,7 @@ const router = new Router({
       route('Notifications', null, 'notifications'),
       route('Quotes', null, 'quotes'),
       route('My Quotes', null, 'myquotes'),
+      route('Upgrade', null, 'upgrade'),
       // Components
       // Error
       route('Error', null, '/404'),
