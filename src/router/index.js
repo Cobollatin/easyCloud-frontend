@@ -16,6 +16,8 @@ const router = new Router({
     return { x: 0, y: 0 }
   },
   routes: [
+    { path: '/', name: 'Home', redirect: '/home' },
+    { path: '', name: 'Home', redirect: '/home' },
     // Not authenticated
     layout('empty', [
       // { path: '/', redirect: '/login' },
@@ -26,8 +28,6 @@ const router = new Router({
     ]),
     // Authenticated
     layout('Default', [
-      { path: '/', name: 'Home', redirect: '/home' },
-      { path: '', name: 'Home', redirect: '/home' },
       redirect('', '/home'),
       redirect('/', '/home'),
       // Pages
