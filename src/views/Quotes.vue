@@ -30,7 +30,6 @@
           @change="verifyUpdateProviders()"
         />
       </v-col>
-
       <!--Services Cards-->
       <v-card
         v-for="service in services"
@@ -379,9 +378,9 @@
       </v-card>
 
       <!--Calculate Quote Button-->
-      <v-row
+      <v-container
         v-if="selectServices.length > 0"
-        justify="end"
+        style="display: flex; justify-content: center; align-items: center;"
       >
         <v-btn
           class="mb-4 mr-6 mt-5"
@@ -404,8 +403,7 @@
         >
           Select a providers
         </v-snackbar>
-      </v-row>
-
+      </v-container>
       <!--Comparative chart-->
       <template
         v-if="comparativeChartDrawer && selectProviders.length !== 0"
@@ -442,11 +440,6 @@
 
 <script>
 
-  import Vue from 'vue'
-
-  const lineSmooth = Vue.chartist.Interpolation.cardinal({
-    tension: 0,
-  })
   export default {
     name: 'QuotesVue',
 

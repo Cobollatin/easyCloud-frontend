@@ -10,7 +10,7 @@ const state = {
     {
       title: 'Home',
       icon: 'mdi-home-outline',
-      to: '/',
+      to: '/home',
     },
     {
       title: 'Quotes',

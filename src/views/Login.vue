@@ -124,12 +124,15 @@
           username: email,
           password: password,
         },
-        ).then(response => {
-          if (response.status === 200) {
-            this.$router.push('/')
-          }
-        },
-        )
+        ).catch(_error => {
+          this.$router.push('/home')
+        })
+          .then(response => {
+            if (response.status === 200) {
+              this.$router.push('/')
+            }
+          },
+          )
       },
     },
   }

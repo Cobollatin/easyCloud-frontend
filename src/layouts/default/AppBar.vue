@@ -16,7 +16,6 @@
     />
 
     <default-drawer-toggle class="hidden-sm-and-down" />
-
     <v-toolbar-title
       class="font-weight-light text-h5"
       v-text="name"
@@ -52,7 +51,7 @@
             <v-btn
               color="blue darken-2"
               text
-              @click="dialog = false"
+              @click="logout()"
             >
               Yes
             </v-btn>
@@ -79,12 +78,15 @@
     name: 'DefaultBar',
 
     components: {
-      DefaultAccount: () => import(
-        './widgets/Account'
-      ),
       DefaultDrawerToggle: () => import(
         './widgets/DrawerToggle'
       ),
+    },
+
+    data: function () {
+      return {
+        dialog: false,
+      }
     },
 
     computed: {
@@ -95,10 +97,11 @@
       name: get('route/name'),
     },
 
-    data: function () {
-      return {
-        dialog: false,
-      }
+    methods: {
+      logout: function () {
+        this.$router.push('/login')
+      },
     },
+
   }
 </script>
