@@ -1,11 +1,12 @@
 <template>
-  <v-container class="contaner-login align justify">
+  <v-container class="contaner-login align justify max-w">
     <v-row
       align="center"
       justify="center"
     >
       <v-col>
         <v-card
+          class="border"
           align="center"
           justify="center"
         >
@@ -17,8 +18,9 @@
               height="80"
             />
           </a>
-          <h1 class="login-center">
-            Login
+
+          <h1 class="login-center color-wa">
+            Log In
           </h1>
           <v-card-text>
             <v-form
@@ -54,6 +56,7 @@
                   </v-btn>
                 </v-col>
               </v-row>
+
               <v-text-field
                 v-model="email"
                 autocomplete="email"
@@ -83,10 +86,18 @@
                 <span class="wh">Login</span>
               </v-btn>
               <v-card-actions>
-                New to EasyCloud? <a
-                  href="#"
-                  class="pl-2"
-                > Sign Up</a>
+                <span class="center-c margin-t1 color-wa">
+                  New to EasyCloud? <strong><router-link
+                    to="/register"
+                    class="text-d-n color-wa font-n"
+                  >Sign Up</router-link></strong>
+                </span>
+                <span class="center-c margin-t1"><strong>
+                  <router-link
+                    to="/forgot"
+                    class="text-d-n color-wa font-n"
+                  >Forgot password</router-link></strong>
+                </span>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -140,9 +151,52 @@
 
 <style scoped>
 .contaner-login {
-  margin-top: 10%;
+  margin-top: 7%;
 }
 .wh{
   color: #EEEEEE;
+}
+.max-w {
+max-width: 50%;
+}
+
+.center-c{
+margin: 0 auto;
+}
+
+.margin-t05{
+margin-top: 1rem;
+}
+
+.margin-t1{
+margin-top: 1rem;
+}
+.margin-t2{
+margin-top: 2rem;
+}
+.margin-b1{
+margin-bottom: 1rem;
+}
+.margin-b2{
+margin-bottom: 2rem;
+}
+
+.color-wa{
+color: #0072C3;
+}
+
+.text-d-n{
+text-decoration: none;
+}
+
+.font-n{
+font-weight:  bold;
+}
+
+.border{
+border-style: solid;
+border-width: 2px;
+border-color: #0072C3;
+
 }
 </style>
