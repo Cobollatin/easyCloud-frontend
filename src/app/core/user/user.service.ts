@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { User } from 'app/core/user/user.types';
+import { map, Observable, ReplaySubject, tap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,10 @@ export class UserService
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
-
+    get user$(): Observable<User>
+    {
+        return this._user.asObservable();
+    }
     /**
      * Setter & getter for user
      *
@@ -32,10 +35,7 @@ export class UserService
         this._user.next(value);
     }
 
-    get user$(): Observable<User>
-    {
-        return this._user.asObservable();
-    }
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
