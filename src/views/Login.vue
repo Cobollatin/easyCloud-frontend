@@ -137,7 +137,7 @@
 
 <style scoped>
 .contaner-login {
-  margin-top: 10%;
+  margin-top: 10%; 
 }
 .wh{
   color: #EEEEEE;
