@@ -6,8 +6,8 @@
   >
     <v-row>
       <v-col
-        class="text-h1"
-        md="6"
+        class="text-h2"
+        md="10"
       >
         My Services
       </v-col>

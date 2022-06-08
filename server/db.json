@@ -1,0 +1,10 @@
+{
+  "virtual-machine": [
+    "region": {
+      {
+        "id": 1,
+        "name": "US",
+      }
+    }
+  ]
+}

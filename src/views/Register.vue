@@ -20,7 +20,7 @@
           </a>
 
           <h1 class="login-center color-wa">
-            Log In
+            Sign Up
           </h1>
           <v-card-text>
             <v-form
@@ -58,11 +58,20 @@
               </v-row>
 
               <v-text-field
-                v-model="email"
-                autocomplete="email"
-                :rules="[rules.email]"
-                label="Email"
-                type="email"
+                v-model="fullname"
+                autocomplete="fullname"
+                :rules="[rules.fullname]"
+                label="Full name"
+                type="fullname"
+                class="rounded-0"
+                required
+              />
+              <v-text-field
+                v-model="emailaddress"
+                autocomplete="emailaddress"
+                :rules="[rules.emailaddress]"
+                label="Email Address"
+                type="emailaddress"
                 class="rounded-0"
                 required
               />
@@ -81,22 +90,17 @@
                 :disabled="false"
                 :loading="isLoading"
                 color="#1976D2"
+                class="margin-t2"
                 @click="login(email,password)"
               >
-                <span class="wh">Login</span>
+                <span class="wh">Create your free account</span>
               </v-btn>
               <v-card-actions>
                 <span class="center-c margin-t1 color-wa">
-                  New to EasyCloud? <strong><router-link
-                    to="/register"
-                    class="text-d-n color-wa font-n"
-                  >Sign Up</router-link></strong>
-                </span>
-                <span class="center-c margin-t1"><strong>
-                  <router-link
-                    to="/forgot"
-                    class="text-d-n color-wa font-n"
-                  >Forgot password</router-link></strong>
+                  Already have an account? <strong><router-link
+                    to="/login"
+                    class="text-d-n color-wa font-n font-n"
+                  >Sign In</router-link></strong>
                 </span>
               </v-card-actions>
             </v-form>
@@ -120,11 +124,12 @@
       form: false,
       isLoading: false,
       rules: {
-        email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
+        fullname: v => !!(v || '').match(/@/) || 'Please enter a fullname',
         length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
         password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
           'Password must contain an upper case letter, a numeric character, and a special character',
         required: v => !!v || 'This field is required',
+        emailaddress: v => !!(v || '').match(/@/) || 'Please enter a email',
       },
     }),
     async mounted () {
@@ -151,8 +156,9 @@
 
 <style scoped>
 .contaner-login {
-  margin-top: 10%;
+    margin-top: 7%;
 }
+
 .wh{
   color: #EEEEEE;
 }
@@ -199,5 +205,4 @@ border-width: 2px;
 border-color: #0072C3;
 
 }
-
 </style>

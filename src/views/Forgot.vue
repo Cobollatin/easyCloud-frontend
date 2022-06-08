@@ -20,7 +20,7 @@
           </a>
 
           <h1 class="login-center color-wa">
-            Log In
+            Forgot password?
           </h1>
           <v-card-text>
             <v-form
@@ -30,6 +30,7 @@
               <v-row
                 align="center"
                 justify="center"
+                class="margin-b2"
               >
                 <v-col class="align justify">
                   <v-btn
@@ -57,6 +58,10 @@
                 </v-col>
               </v-row>
 
+              <span class="center-c margin-t1 color-wa">
+                Fill the form to reset your password
+              </span>
+
               <v-text-field
                 v-model="email"
                 autocomplete="email"
@@ -66,37 +71,19 @@
                 class="rounded-0"
                 required
               />
-              <v-text-field
-                v-model="password"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                validate-on-blur
-                :type="showPassword ? 'text' : 'password'"
-                :rules="[rules.password,rules.length(6)]"
-                label="Password"
-                class="rounded-0"
-                required
-                @click:append="showPassword = !showPassword"
-              />
               <v-btn
                 :disabled="false"
                 :loading="isLoading"
                 color="#1976D2"
-                @click="login(email,password)"
               >
-                <span class="wh">Login</span>
+                <span class="wh">Send reset link</span>
               </v-btn>
               <v-card-actions>
                 <span class="center-c margin-t1 color-wa">
-                  New to EasyCloud? <strong><router-link
-                    to="/register"
+                  Return to <strong> <router-link
+                    to="/login"
                     class="text-d-n color-wa font-n"
-                  >Sign Up</router-link></strong>
-                </span>
-                <span class="center-c margin-t1"><strong>
-                  <router-link
-                    to="/forgot"
-                    class="text-d-n color-wa font-n"
-                  >Forgot password</router-link></strong>
+                  >Sign In</router-link></strong>
                 </span>
               </v-card-actions>
             </v-form>
@@ -151,7 +138,7 @@
 
 <style scoped>
 .contaner-login {
-  margin-top: 10%;
+  margin-top: 7%;
 }
 .wh{
   color: #EEEEEE;
@@ -199,5 +186,4 @@ border-width: 2px;
 border-color: #0072C3;
 
 }
-
 </style>
