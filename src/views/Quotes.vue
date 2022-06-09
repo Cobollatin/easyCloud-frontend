@@ -380,7 +380,7 @@
       <!--Calculate Quote Button-->
       <v-container
         v-if="selectServices.length > 0"
-        style="display: flex; justify-content: center; align-items: center;"
+        style="display: flex; justify-content: end; align-items: end;"
       >
         <v-btn
           class="mb-4 mr-6 mt-5"
@@ -402,6 +402,16 @@
           dark
         >
           Select a providers
+        </v-snackbar>
+        <v-snackbar
+          v-model="snackBarDrawerSave"
+          top
+          timeout="2000"
+          right
+          color="green accent-4"
+          dark
+        >
+          Quote Save
         </v-snackbar>
       </v-container>
       <!--Comparative chart-->
@@ -431,6 +441,14 @@
                 {{ item.provider }}
               </v-chip>
             </template>
+            <template v-slot:item.action="{ item }">
+              <v-icon
+                id="icon-save"
+                @click="saveQuoteConfirm(item)"
+              >
+                {{ item.action }}
+              </v-icon>
+            </template>
           </v-data-table>
         </v-container>
       </template>
@@ -448,12 +466,14 @@
         headers: [
           { text: 'Provider', value: 'provider' },
           { text: 'Price', value: 'price' },
+          { text: '', value: 'action' },
         ],
         quotes: [],
         selectServices: [],
         selectProviders: [],
         comparativeChartDrawer: false,
         snackBarDrawer: false,
+        snackBarDrawerSave: false,
         emits: ['response'],
         services: [
           'Virtual Machine', 'Serverless', 'Data Base',
@@ -470,6 +490,7 @@
         amountMachine: null,
         amountTime: null,
         typeDate: ['Days', 'Hours', 'Month'],
+        confirmSave: null,
       }
     },
     methods: {
@@ -480,6 +501,7 @@
           this.quotes.push({
             provider: provider,
             price: (this.amountMachine * this.amountTime),
+            action: 'mdi-content-save',
           })
         })
       },
@@ -511,11 +533,18 @@
         this.comparativeChartDrawer = false
       },
 
+      saveQuoteConfirm (item) {
+        this.confirmSave = confirm('Are you sure to save this quote?')
+        if (this.confirmSave === true) {
+          this.snackBarDrawerSave = true
+          this.comparativeChartDrawer = false
+        } else {
+          alert('Noooo')
+        }
+      },
     },
   }
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
