@@ -403,6 +403,16 @@
         >
           Select a providers
         </v-snackbar>
+        <v-snackbar
+          v-model="snackBarDrawerSave"
+          top
+          timeout="2000"
+          right
+          color="green accent-4"
+          dark
+        >
+          Quote Save
+        </v-snackbar>
       </v-container>
       <!--Comparative chart-->
       <template
@@ -463,6 +473,7 @@
         selectProviders: [],
         comparativeChartDrawer: false,
         snackBarDrawer: false,
+        snackBarDrawerSave: false,
         emits: ['response'],
         services: [
           'Virtual Machine', 'Serverless', 'Data Base',
@@ -525,8 +536,8 @@
       saveQuoteConfirm (item) {
         this.confirmSave = confirm('Are you sure to save this quote?')
         if (this.confirmSave === true) {
-          let provider = item.provider
-          alert(provider)
+          this.snackBarDrawerSave = true
+          this.comparativeChartDrawer = false
         } else {
           alert('Noooo')
         }

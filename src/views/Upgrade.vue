@@ -4,22 +4,14 @@
     fluid
     tag="section"
   >
-    <v-row>
-      <v-col
-        class="text-h1"
-        md="6"
-      >
-        Upgrade your account to get better benefits
-      </v-col>
-    </v-row>
     <v-row justify="center">
       <v-col
         cols="12"
         md="6"
       >
-        <app-card class="text-left mb-3">
+        <app-card class="text-left mb-10">
           <v-card-title class="card-top has-btn">
-            <h6 class="text-h6 ml-2 white--text">
+            <h6 class="text-h3 ml-2 black--text">
               Free (current)
             </h6>
             <v-btn
@@ -32,14 +24,14 @@
           </v-card-title>
           <v-card-text class="card-content">
             <i class="dot" />
-            <h4 class="text-h4 pt-3 white--text">
+            <h4 class="text-h6 pt-3 white--text">
               You can only compare with three providers
             </h4>
           </v-card-text>
         </app-card>
-        <app-card class="text-left mb-3">
+        <app-card class="text-left mb-10">
           <v-card-title class="card-top has-btn">
-            <h6 class="text-h6 ml-2 white--text">
+            <h6 class="text-h3 ml-2 black--text">
               PROFESSIONAL
             </h6>
             <v-btn
@@ -52,14 +44,14 @@
           </v-card-title>
           <v-card-text class="card-content">
             <i class="dot" />
-            <h4 class="text-h4 pt-3 white--text">
+            <h4 class="text-h6 pt-3 white--text">
               You can compare with all our providers
             </h4>
           </v-card-text>
         </app-card>
-        <app-card class="text-left mb-3">
+        <app-card class="text-left mb-10">
           <v-card-title class="card-top has-btn">
-            <h6 class="text-h6 ml-2 white--text">
+            <h6 class="text-h3 ml-2 black--text">
               BUSINESS
             </h6>
             <v-btn
@@ -73,13 +65,13 @@
           <v-card-text class="card-content has-itmes">
             <div class="card-content-item">
               <i class="dot" />
-              <h4 class="text-h4 pt-3 white--text">
+              <h4 class="text-h6 pt-3 white--text">
                 We will be intermediaries between you and the providers.
               </h4>
             </div>
             <div class="card-content-item">
               <i class="dot" />
-              <h4 class="text-h4 pt-3 white--text">
+              <h4 class="text-h6 pt-3 white--text">
                 Exclusive offer
               </h4>
             </div>
@@ -96,7 +88,7 @@
 
 <style lang="scss" scoped>
   .card-top{
-    background: #0072C3;
+    background: #fffbfb;
     &.has-btn{
       display: flex;
       justify-content: space-between;
