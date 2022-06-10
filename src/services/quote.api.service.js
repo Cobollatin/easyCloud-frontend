@@ -5,8 +5,8 @@ export class QuoteApiService {
     return http.get('/quotes/test')
   }
 
-  create (data, userId) {
-    return http.post(`/quotes/add/${userId}`, data)
+  create (data) {
+    return http.post(`/quotes/add/${data.userId}`, data, data.userId)
   }
 
   update (id, data) {

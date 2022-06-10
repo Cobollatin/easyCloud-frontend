@@ -134,7 +134,7 @@
         console.log(response)
       })
 
-      this.userService.getAll('frcg0303@hotmail.com').then((response) => {
+      this.userService.getByEmail('frcg0303@hotmail.com').then((response) => {
         this.user = response.data
         console.log(response)
       })

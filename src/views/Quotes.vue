@@ -7,7 +7,7 @@
         top
         timeout="2000"
         right
-        :color="snackBarColor"
+        color="green"
         dark
       >
         {{ snackBarText }}
@@ -24,7 +24,7 @@
             </v-card-title>
             <v-card-text class="mt-5">
               <v-text-field
-                v-model="quoteTitle"
+                v-model="quoteSaved.title"
                 style="width: 700px"
                 outlined
                 background-color="#ffffff"
@@ -32,7 +32,7 @@
                 color="blue darken-4"
               />
               <v-text-field
-                v-model="quoteDescription"
+                v-model="quoteSaved.description"
                 style="width: 700px"
                 outlined
                 background-color="#ffffff"
@@ -483,7 +483,7 @@
             <template v-slot:item.action="{ item }">
               <v-icon
                 id="icon-save"
-                @click="saveQuoteConfirm(item)"
+                @click="saveQuoteConfirm(item, selectService)"
               >
                 {{ item.action }}
               </v-icon>
@@ -497,7 +497,7 @@
 
 <script>
 
-  import {QuoteApiService} from "@/services/quote.api.service";
+  import { QuoteApiService } from '@/services/quote.api.service'
 
   export default {
     name: 'QuotesVue',
@@ -506,6 +506,7 @@
       return {
         quoteService: null,
         openDialog: false,
+        selectService: null,
         headers: [
           { text: 'Provider', value: 'provider' },
           { text: 'Price', value: 'price' },
@@ -531,17 +532,24 @@
         category: ['All', 'Compute optimized', 'General Purpose', 'GPU'],
         instanceSeries: ['All', 'A-series', 'Bs-series', 'Dsv2-series'],
         amountMachine: null,
-        quoteTitle: null,
-        quoteDescription: null,
         amountTime: null,
         typeDate: ['Days', 'Hours', 'Month'],
         confirmSave: null,
         saveQuoteInformation: null,
         snackBarText: null,
+        quoteSaved: {},
       }
     },
     created () {
       this.quoteService = new QuoteApiService()
+      this.quoteSaved = {
+        description: '',
+        title: '',
+        date: '',
+        price: 0,
+        cloudService: '',
+        userId: 1,
+      }
     },
     methods: {
 
@@ -585,12 +593,23 @@
         this.comparativeChartDrawer = false
       },
 
-      saveQuoteConfirm (item) {
+      saveQuoteConfirm (item, selectService) {
         this.openDialog = true
         this.saveQuoteInformation = item
+        this.selectService = selectService
+        console.log(item)
       },
-      saveQuote (item) {
-        alert('Quote Save')
+
+      saveQuote () {
+        this.quoteSaved.price = this.saveQuoteInformation.price
+        this.quoteSaved.cloudService = this.selectService
+        const actualTime = Date.now()
+        const today = new Date(actualTime)
+        this.quoteSaved.date = today.toDateString()
+
+        this.quoteService.create(this.quoteSaved).then((response) => {
+          console.log(response.data)
+        })
         this.openDialog = false
       },
     },
