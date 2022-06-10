@@ -1,6 +1,65 @@
 <template>
   <v-container fluid>
     <v-row>
+      <!--Snackbar Alert-->
+      <v-snackbar
+        v-model="snackBarDrawer"
+        top
+        timeout="2000"
+        right
+        color="green"
+        dark
+      >
+        {{ snackBarText }}
+      </v-snackbar>
+      <!--Dialog Quote Information-->
+      <template class="text-center">
+        <v-dialog
+          v-model="openDialog"
+          width="800"
+        >
+          <v-card>
+            <v-card-title class="text-h5 blue darken-4 white--text">
+              Information about the quote
+            </v-card-title>
+            <v-card-text class="mt-5">
+              <v-text-field
+                v-model="quoteSaved.title"
+                style="width: 700px"
+                outlined
+                background-color="#ffffff"
+                label="Title"
+                color="blue darken-4"
+              />
+              <v-text-field
+                v-model="quoteSaved.description"
+                style="width: 700px"
+                outlined
+                background-color="#ffffff"
+                label="Description"
+                color="blue darken-4"
+              />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="blue darken-4"
+                text
+                @click="saveQuote"
+              >
+                Save
+              </v-btn>
+              <v-btn
+                color="black"
+                text
+                @click="openDialog = false"
+              >
+                Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </template>
       <!--Select Group-->
       <v-col sm="6">
         <v-select
@@ -393,26 +452,6 @@
           </v-icon>
           Calculate Quote
         </v-btn>
-        <v-snackbar
-          v-model="snackBarDrawer"
-          top
-          timeout="2000"
-          right
-          color="red accent-4"
-          dark
-        >
-          Select a providers
-        </v-snackbar>
-        <v-snackbar
-          v-model="snackBarDrawerSave"
-          top
-          timeout="2000"
-          right
-          color="green accent-4"
-          dark
-        >
-          Quote Save
-        </v-snackbar>
       </v-container>
       <!--Comparative chart-->
       <template
@@ -444,7 +483,7 @@
             <template v-slot:item.action="{ item }">
               <v-icon
                 id="icon-save"
-                @click="saveQuoteConfirm(item)"
+                @click="saveQuoteConfirm(item, selectService)"
               >
                 {{ item.action }}
               </v-icon>
@@ -458,11 +497,16 @@
 
 <script>
 
+  import { QuoteApiService } from '@/services/quote.api.service'
+
   export default {
     name: 'QuotesVue',
 
     data () {
       return {
+        quoteService: null,
+        openDialog: false,
+        selectService: null,
         headers: [
           { text: 'Provider', value: 'provider' },
           { text: 'Price', value: 'price' },
@@ -473,7 +517,7 @@
         selectProviders: [],
         comparativeChartDrawer: false,
         snackBarDrawer: false,
-        snackBarDrawerSave: false,
+        snackBarColor: false,
         emits: ['response'],
         services: [
           'Virtual Machine', 'Serverless', 'Data Base',
@@ -491,6 +535,20 @@
         amountTime: null,
         typeDate: ['Days', 'Hours', 'Month'],
         confirmSave: null,
+        saveQuoteInformation: null,
+        snackBarText: null,
+        quoteSaved: {},
+      }
+    },
+    created () {
+      this.quoteService = new QuoteApiService()
+      this.quoteSaved = {
+        description: '',
+        title: '',
+        date: '',
+        price: 0,
+        cloudService: '',
+        userId: 1,
       }
     },
     methods: {
@@ -513,6 +571,8 @@
         } else {
           this.comparativeChartDrawer = false
           this.snackBarDrawer = true
+          this.snackBarText = 'Select a provider'
+          this.snackBarColor = 'red accent-4'
         }
       },
 
@@ -533,14 +593,24 @@
         this.comparativeChartDrawer = false
       },
 
-      saveQuoteConfirm (item) {
-        this.confirmSave = confirm('Are you sure to save this quote?')
-        if (this.confirmSave === true) {
-          this.snackBarDrawerSave = true
-          this.comparativeChartDrawer = false
-        } else {
-          alert('Noooo')
-        }
+      saveQuoteConfirm (item, selectService) {
+        this.openDialog = true
+        this.saveQuoteInformation = item
+        this.selectService = selectService
+        console.log(item)
+      },
+
+      saveQuote () {
+        this.quoteSaved.price = this.saveQuoteInformation.price
+        this.quoteSaved.cloudService = this.selectService
+        const actualTime = Date.now()
+        const today = new Date(actualTime)
+        this.quoteSaved.date = today.toDateString()
+
+        this.quoteService.create(this.quoteSaved).then((response) => {
+          console.log(response.data)
+        })
+        this.openDialog = false
       },
     },
   }

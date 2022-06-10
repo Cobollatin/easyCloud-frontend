@@ -1,12 +1,12 @@
 import http from '../core/services/http-common'
 
-export class UsersApiService {
-  getByEmail (email) {
-    return http.get(`/users/${email}`)
+export class QuoteApiService {
+  getAll () {
+    return http.get('/quotes/test')
   }
 
   create (data) {
-    return http.post('/users', data)
+    return http.post(`/quotes/add/${data.userId}`, data, data.userId)
   }
 
   update (id, data) {
