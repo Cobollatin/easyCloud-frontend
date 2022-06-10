@@ -4,6 +4,16 @@
     fluid
     tag="section"
   >
+    <v-snackbar
+      v-model="snackBarDrawer"
+      top
+      timeout="2000"
+      right
+      color="red accent-4"
+      dark
+    >
+      {{ textDrawer }}
+    </v-snackbar>
     <v-row justify="center">
       <v-col
         cols="12"
@@ -13,10 +23,6 @@
           color="blue darken-4"
           icon="mdi-account-outline"
         >
-          <template #title>
-            Edit Profile — <small class="text-body-1">Complete your profile</small>
-          </template>
-
           <v-form>
             <v-container class="py-0">
               <v-row>
@@ -25,27 +31,9 @@
                   md="6"
                 >
                   <v-text-field
+                    v-model="userModify.name"
                     color="blue darken-4"
-                    label="First Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    color="blue darken-4"
-                    label="Last Name"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="blue darken-4"
-                    label="User Name"
+                    label="Name"
                   />
                 </v-col>
 
@@ -54,6 +42,7 @@
                   md="4"
                 >
                   <v-text-field
+                    v-model="userModify.email"
                     color="blue darken-4"
                     label="Email Address"
                   />
@@ -64,16 +53,9 @@
                   md="4"
                 >
                   <v-text-field
+                    v-model="userModify.phone"
                     color="blue darken-4"
                     label="Phone Number"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
-                    color="blue darken-4"
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                   />
                 </v-col>
 
@@ -84,6 +66,7 @@
                   <v-btn
                     color="blue darken-4 white--text"
                     min-width="150"
+                    @click="updateUser"
                   >
                     Update Profile
                   </v-btn>
@@ -99,34 +82,27 @@
         md="4"
       >
         <app-card class="mt-4 text-center">
-          <div class="text-h4 mt-3 mb-3 text--primary">
-            My profile
-          </div>
           <v-img
-            class="rounded-circle elevation-6 mt-n20 d-inline-block"
+            class="rounded-circle elevation-6 mt-11 d-inline-block"
             src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
             width="128"
           />
 
           <v-card-text class="text-center">
             <h6 class="text-h6 mb-2 text--secondary">
-              CEO / FOUNDER
+              USER DATA
             </h6>
 
             <h4 class="text-h4 mb-3 text--primary">
-              John Leider
+              {{ user.name }}
             </h4>
 
             <h5 class="text-h5 mb-3 text--secondary">
-              example@example.com
+              {{ user.email }}
             </h5>
 
-            <p class="text--secondary">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem deserunt veniam tempora magnam quisquam quam error iusto cupiditate ducimus, et eligendi saepe voluptatibus assumenda similique temporibus placeat animi dicta?
-            </p>
-
             <h5 class="text-h5 mb-3 text--secondary">
-              987 654 321
+              {{ user.phone }}
             </h5>
           </v-card-text>
         </app-card>
@@ -136,5 +112,59 @@
 </template>
 
 <script>
-  export default { name: 'UserProfileView' }
+
+  import { UsersApiService } from '@/services/users.api.service'
+
+  export default {
+    name: 'UserProfileView',
+
+    data () {
+      return {
+        textDrawer: null,
+        snackBarDrawer: false,
+        user: {},
+        userModify: {},
+        userService: null,
+      }
+    },
+    created () {
+      this.userService = new UsersApiService()
+      this.userService.getAll('frcg0303@hotmail.com').then((response) => {
+        this.userModify = response.data
+        console.log(response)
+      })
+
+      this.userService.getAll('frcg0303@hotmail.com').then((response) => {
+        this.user = response.data
+        console.log(response)
+      })
+    },
+    methods: {
+      updateUser () {
+        console.log(this.userModify.name)
+        if (this.userModify.name !== '' && this.userModify.email !== '' && this.userModify.number !== '') {
+          this.userService.update(this.userModify.id, this.userModify)
+            .then((response) => {
+              this.userModify = response.data
+              console.log(response)
+              this.user =
+                {
+                  email: response.data.email,
+                  id: response.data.id,
+                  name: response.data.name,
+                  password: response.data.password,
+                  phone: response.data.phone,
+                }
+            })
+        } else {
+          if (this.userModify.name === '') this.textDrawer = 'Complete the user name'
+          if (this.userModify.email === '') this.textDrawer = 'Complete the user email address'
+          if (this.userModify.number === '') this.textDrawer = 'Complete the user number'
+          this.snackBarDrawer = true
+          this.userModify = this.user
+        }
+      },
+    },
+  }
+
 </script>
