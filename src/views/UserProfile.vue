@@ -129,7 +129,7 @@
     },
     created () {
       this.userService = new UsersApiService()
-      this.userService.getAll('frcg0303@hotmail.com').then((response) => {
+      this.userService.getByEmail('frcg0303@hotmail.com').then((response) => {
         this.userModify = response.data
         console.log(response)
       })
