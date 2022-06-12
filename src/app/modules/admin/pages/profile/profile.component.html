@@ -23,47 +23,116 @@
                     alt="User avatar">
             </div>
 
-            <!-- Details -->
-            <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
-                <div class="text-lg font-bold leading-none">John Doe</div>
-                <div class="text-secondary">john.doe@company.com</div>
-            </div>
-
-            <!-- Separator -->
-            <div class="hidden lg:flex h-8 mx-8 border-l-2"></div>
-
             <!-- Stats -->
             <div class="flex items-center mt-6 lg:mt-0 space-x-6 mb-6 md:mb-0" >
+              <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
+                  <div class="text-lg font-bold leading-none">John Doe</div>
+                  <div class="text-secondary">john.doe@company.com</div>
+              </div>
+
+              <!-- Separator -->
+              <div class="hidden lg:flex h-8 mx-8 border-l-2"></div>
+
                 <div class="flex flex-col items-center">
                     <span class="font-bold">Cotizaciones</span>
                     <span class="text-sm font-medium text-secondary">0</span>
                 </div>
+                <!-- Separator -->
+              <div class="hidden lg:flex h-8 mx-8 border-l-2"></div>
+
                 <div class="flex flex-col items-center">
                     <span class="font-bold">Plan Actual</span>
                     <span class="text-sm font-medium text-secondary">Personal</span>
                 </div>
             </div>
-
-
-
         </div>
 
     </div>
 
+    <div class="px-6 sm:px-8 pt-8 sm:pt-8">
+      <div class="flex flex-col">
+        <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight">
+            Actualizar Perfil
+        </div>
+        <h2 class="text-xl font-semibold">
+            Ingresa los datos a actualizar
+        </h2>
+      </div>
+    </div>
+
     <!-- Main -->
-    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 pt-3 sm:pt-4">
 
         <!-- Column -->
-        <div class="hidden lg:flex flex-col items-start mr-8">
+        <div class=" lg:flex flex-col items-start mr-8">
+
+          <!-- Alert -->
+          <!-- <fuse-alert
+          class="mt-8 -mb-4"
+          *ngIf="showAlert"
+          [appearance]="'outline'"
+          [showIcon]="false"
+          [type]="alert.type"
+          [@shake]="alert.type === 'error'">
+          {{alert.message}}
+          </fuse-alert> -->
+
+          <!-- form -->
+          <form
+          class="mt-8"
+          [formGroup]="updateProfile"
+          #signInNgForm="ngForm">
 
 
+          <!-- Password field -->
+          <mat-form-field class="w-full">
+            <mat-label>Nombre</mat-label>
+            <input
+                id="name"
+                matInput
+                type="name"
+                [formControlName]="'name'"
+                #passwordField>
+            <button
+                mat-icon-button
+                type="button"
+                (click)="passwordField.type === 'name' ? passwordField.type = 'text' : passwordField.type = 'name'"
+                matSuffix>
+            </button>
+          </mat-form-field>
 
+          <!-- Email field -->
+          <mat-form-field class="w-full">
+              <mat-label>Correo electrónico</mat-label>
+              <input
+                  id="email"
+                  matInput
+                  [formControlName]="'email'">
+              <mat-error >
+                  Se require un correo electrónico
+              </mat-error>
+              <mat-error>
+                  Ingresar una direccion de correo valida
+              </mat-error>
+          </mat-form-field>
+
+          <!-- Submit button -->
+          <button
+              class="fuse-mat-button-large w-full mt-6"
+              mat-flat-button
+              [color]="'primary'">
+              <span>
+                  Actualizar
+              </span>
+          </button>
+
+          </form>
         </div>
 
         <!-- Column -->
         <div class="flex flex-col items-start">
 
-
+        </div>
     </div>
 
 </div>

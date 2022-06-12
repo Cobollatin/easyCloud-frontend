@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 
 @Injectable()
 export class AuthService
@@ -22,7 +22,10 @@ export class AuthService
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
-
+    get accessToken(): string
+    {
+        return localStorage.getItem('accessToken') ?? '';
+    }
     /**
      * Setter & getter for access token
      */
@@ -31,10 +34,6 @@ export class AuthService
         localStorage.setItem('accessToken', token);
     }
 
-    get accessToken(): string
-    {
-        return localStorage.getItem('accessToken') ?? '';
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

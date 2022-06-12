@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-
+import { FormGroup } from '@angular/forms';
 @Component({
     selector       : 'profile',
     templateUrl    : './profile.component.html',
@@ -8,6 +8,8 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 })
 export class ProfileComponent
 {
+  updateProfile: FormGroup;
+  showAlert: boolean;
     /**
      * Constructor
      */
