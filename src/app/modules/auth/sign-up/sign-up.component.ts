@@ -60,45 +60,53 @@ export class AuthSignUpComponent implements OnInit
     /**
      * Sign up
      */
-    signUp(): void
-    {
-        // Do nothing if the form is invalid
-        if ( this.signUpForm.invalid )
-        {
-            return;
-        }
+     signUp(): void {
+      // Do nothing if the form is invalid
+      if (this.signUpForm.invalid) {
+          if (this.signUpForm.controls.agreements.invalid) {
+              this.alert = {
+                  type: 'error',
+                  message: 'Please accept the terms and conditions.'
+              };
+              this.showAlert = true;
+          }
+          return;
+      }
 
-        // Disable the form
-        this.signUpForm.disable();
 
-        // Hide the alert
-        this.showAlert = false;
+      // Disable the form
+      this.signUpForm.disable();
 
-        // Sign up
-        this._authService.signUp(this.signUpForm.value)
-            .subscribe(
-                (response) => {
+      // Hide the alert
+      this.showAlert = false;
 
-                    // Navigate to the confirmation required page
-                    this._router.navigateByUrl('/confirmation-required');
-                },
-                (response) => {
+      // Sign up
+      this._authService.signUp(this.signUpForm.value)
+          .subscribe(
+              (response) => {
 
-                    // Re-enable the form
-                    this.signUpForm.enable();
+                  // Navigate to the confirmation required page
+                  this._router.navigateByUrl('/confirmation-required');
+              },
+              (response) => {
+                  console.log(response);
 
-                    // Reset the form
-                    this.signUpNgForm.resetForm();
+                  // Re-enable the form
+                  this.signUpForm.enable();
 
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Something went wrong, please try again.'
-                    };
+                  // Reset the form
+                  // this.signUpNgForm.resetForm();
 
-                    // Show the alert
-                    this.showAlert = true;
-                }
-            );
-    }
+                  // Set the alert
+                  this.alert = {
+                      type: 'error',
+                      message: response.error
+                  };
+
+                  // Show the alert
+                  this.showAlert = true;
+
+              }
+          );
+  }
 }
