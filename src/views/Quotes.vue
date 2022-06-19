@@ -52,7 +52,7 @@
               <v-btn
                 color="black"
                 text
-                @click="openDialog = false"
+                @click="cancelSaveQuote"
               >
                 Cancel
               </v-btn>
@@ -231,7 +231,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="region"
                     label="Region"
                     solo
                     outlined
@@ -244,7 +244,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="serverlessTier"
                     label="Tier"
                     outlined
                     background-color="#ffffff"
@@ -254,21 +254,13 @@
                 <v-col
                   sm="3"
                   class="ml-10"
-                >
-                  <v-select
-                    :items="providers"
-                    label="Memory size"
-                    outlined
-                    background-color="#ffffff"
-                    color="blue darken-4"
-                  />
-                </v-col>
+                />
                 <v-col
                   sm="7"
                   class="ml-10 d-flex"
                 >
                   <v-select
-                    :items="providers"
+                    :items="memorySize"
                     label="Memory Size"
                     outlined
                     background-color="#ffffff"
@@ -279,6 +271,7 @@
                     X
                   </h4>
                   <v-text-field
+                    v-model="executionPerMonth"
                     style="width: 300px"
                     outlined
                     background-color="#ffffff"
@@ -289,6 +282,7 @@
                     X
                   </h4>
                   <v-text-field
+                    v-model="executionTime"
                     style="width: 300px"
                     outlined
                     background-color="#ffffff"
@@ -309,7 +303,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="region"
                     label="Region"
                     outlined
                     background-color="#ffffff"
@@ -321,7 +315,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="databaseType"
                     label="Type"
                     outlined
                     background-color="#ffffff"
@@ -333,7 +327,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="backup"
                     label="Backup Storage"
                     outlined
                     background-color="#ffffff"
@@ -345,7 +339,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="purchase"
                     label="Purchase Model"
                     outlined
                     background-color="#ffffff"
@@ -357,7 +351,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="databaseTier"
                     label="Service Tier"
                     outlined
                     background-color="#ffffff"
@@ -369,8 +363,8 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
-                    label="Conpute Tier"
+                    :items="computeTier"
+                    label="Compute Tier"
                     outlined
                     background-color="#ffffff"
                     color="blue darken-4"
@@ -381,7 +375,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="hardware"
                     label="Hardware Type"
                     outlined
                     background-color="#ffffff"
@@ -393,7 +387,7 @@
                   class="ml-10"
                 >
                   <v-select
-                    :items="providers"
+                    :items="instance"
                     label="Instance"
                     outlined
                     background-color="#ffffff"
@@ -405,6 +399,7 @@
                   class="ml-10 d-flex"
                 >
                   <v-text-field
+                    v-model="instanceAmount"
                     style="width: 500px"
                     outlined
                     background-color="#ffffff"
@@ -415,6 +410,7 @@
                     X
                   </h4>
                   <v-text-field
+                    v-model="timeExecution"
                     style="width: 500px"
                     outlined
                     background-color="#ffffff"
@@ -422,7 +418,7 @@
                     label=""
                   />
                   <v-select
-                    :items="providers"
+                    :items="typeDate"
                     label="Period"
                     outlined
                     background-color="#ffffff"
@@ -469,8 +465,55 @@
           </h2>
           <v-data-table
             :headers="headers"
-            :items="quotes"
+            :items="quotesServerless"
             class="elevation-1"
+            v-if='selectService === "Serverless" '
+          >
+            <template v-slot:item.provider="{ item }">
+              <v-chip
+                :color="getColor(item.provider)"
+                dark
+              >
+                {{ item.provider }}
+              </v-chip>
+            </template>
+            <template v-slot:item.action="{ item }">
+              <v-icon
+                id="icon-save"
+                @click="saveQuoteConfirm(item, selectService)"
+              >
+                {{ item.action }}
+              </v-icon>
+            </template>
+          </v-data-table>
+          <v-data-table
+            :headers="headers"
+            :items="quotesDB"
+            class="elevation-1"
+            v-if='selectService === "Data Base" '
+          >
+            <template v-slot:item.provider="{ item }">
+              <v-chip
+                :color="getColor(item.provider)"
+                dark
+              >
+                {{ item.provider }}
+              </v-chip>
+            </template>
+            <template v-slot:item.action="{ item }">
+              <v-icon
+                id="icon-save"
+                @click="saveQuoteConfirm(item, selectService)"
+              >
+                {{ item.action }}
+              </v-icon>
+            </template>
+          </v-data-table>
+          <v-data-table
+            :headers="headers"
+            :items="quotesVM"
+            class="elevation-1"
+            v-if='selectService === "Virtual Machine" '
           >
             <template v-slot:item.provider="{ item }">
               <v-chip
@@ -512,7 +555,9 @@
           { text: 'Price', value: 'price' },
           { text: '', value: 'action' },
         ],
-        quotes: [],
+        quotesServerless: [],
+        quotesVM: [],
+        quotesDB: [],
         selectServices: [],
         selectProviders: [],
         comparativeChartDrawer: false,
@@ -521,6 +566,36 @@
         emits: ['response'],
         services: [
           'Virtual Machine', 'Serverless', 'Data Base',
+        ],
+        serverlessTier: [
+          'Unique Database',
+          'Elastic Group',
+        ],
+        memorySize: [
+          128, 256, 384, 512, 640,
+        ],
+        databaseType: [
+          'Unique Database', 'Elastic Group',
+        ],
+        backup: [
+          'Local', 'Multiple Zones',
+        ],
+        purchase: [
+          'Unique Database',
+          'Elastic Group',
+        ],
+        databaseTier: [
+          'General Use V2',
+          'Blob Storage',
+        ],
+        computeTier: [
+          'LRS', 'ZRS', 'GRS',
+        ],
+        hardware: [
+          'Gen 4', 'Gen 5', 'FSV2',
+        ],
+        instance: [
+          '2 vCore', '4 vCore', '8 vCore', '16 vCore', '32 vCore',
         ],
         providersName: [
           'Azure', 'Oracle', 'AWS', 'Alibaba', 'Google', ' IBM',
@@ -533,6 +608,10 @@
         instanceSeries: ['All', 'A-series', 'Bs-series', 'Dsv2-series'],
         amountMachine: null,
         amountTime: null,
+        executionTime: null,
+        executionPerMonth: null,
+        instanceAmount: null,
+        timeExecution: null,
         typeDate: ['Days', 'Hours', 'Month'],
         confirmSave: null,
         saveQuoteInformation: null,
@@ -552,13 +631,30 @@
       }
     },
     methods: {
+      
+      cancelSaveQuote() {
+        this.quoteSaved = {}
+        this.openDialog = false
+      },
 
       calculateQuote () {
-        this.quotes = []
+        this.quotesServerless = []
+        this.quotesVM = []
+        this.quotesDB = []
         this.selectProviders.forEach((provider) => {
-          this.quotes.push({
+          this.quotesServerless.push({
+            provider: provider,
+            price: (this.executionTime * this.executionPerMonth),
+            action: 'mdi-content-save',
+          })
+          this.quotesVM.push({
             provider: provider,
             price: (this.amountMachine * this.amountTime),
+            action: 'mdi-content-save',
+          })
+          this.quotesDB.push({
+            provider: provider,
+            price: (this.instanceAmount * this.timeExecution),
             action: 'mdi-content-save',
           })
         })
@@ -610,6 +706,7 @@
         this.quoteService.create(this.quoteSaved).then((response) => {
           console.log(response.data)
         })
+        this.quoteSaved = {}
         this.openDialog = false
       },
     },
