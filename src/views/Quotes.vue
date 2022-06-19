@@ -52,7 +52,7 @@
               <v-btn
                 color="black"
                 text
-                @click="openDialog = false"
+                @click="cancelSaveQuote"
               >
                 Cancel
               </v-btn>
@@ -631,6 +631,11 @@
       }
     },
     methods: {
+      
+      cancelSaveQuote() {
+        this.quoteSaved = {}
+        this.openDialog = false
+      },
 
       calculateQuote () {
         this.quotesServerless = []
@@ -701,6 +706,7 @@
         this.quoteService.create(this.quoteSaved).then((response) => {
           console.log(response.data)
         })
+        this.quoteSaved = {}
         this.openDialog = false
       },
     },
