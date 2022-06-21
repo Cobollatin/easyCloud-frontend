@@ -14,6 +14,6 @@ export class QuoteApiService {
   }
 
   delete (id) {
-    return http.delete(`/users/${id}`)
+    return http.delete(`/quotes/delete/${id}`)
   }
 }
