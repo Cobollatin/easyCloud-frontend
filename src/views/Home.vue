@@ -68,9 +68,11 @@
 
 <script>
 
+  import {QuoteApiService} from "@/services/quote.api.service";
+
   export default {
     name: 'Home',
-
+    quoteService: null,
     emits: ['response'],
     data: () => ({
       title: 'Home',
@@ -83,7 +85,7 @@
         {
           sortable: false,
           text: 'Name',
-          value: 'name',
+          value: 'title',
         },
         {
           sortable: false,
@@ -98,26 +100,7 @@
           align: 'center',
         },
       ],
-      items: [
-        {
-          id: 1,
-          name: 'Quote 1',
-          price: '$500',
-          date: '31-02-2020',
-        },
-        {
-          id: 2,
-          name: 'Quote 2',
-          price: '$400',
-          date: '01-08-2021',
-        },
-        {
-          id: 3,
-          name: 'Quote 3',
-          price: '$1500',
-          date: '05-02-2022',
-        },
-      ],
+      items: [],
       providers: [
         {
           id: 1,
@@ -151,5 +134,11 @@
         },
       ],
     }),
+    created () {
+      this.quoteService = new QuoteApiService()
+      this.quoteService.getAll().then((response) => {
+        this.items = response.data;
+      })
+    },
   }
 </script>
