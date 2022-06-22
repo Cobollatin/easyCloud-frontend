@@ -39,7 +39,7 @@
           multiple
         >
           <v-expansion-panel
-            v-if=" (selectServices === quote.service) || (selectServices === '')"
+            v-if=" (selectServices === quote.cloudService) || (selectServices === '')"
             style="margin-top: 15px;"
           >
             <v-expansion-panel-header>
@@ -50,7 +50,7 @@
                   class="text-h2 font-weight-black"
                   style="color: #0072C3"
                 >
-                  {{ quote.title }}
+                  {{ quote.title }} - {{ quote.cloudService}}
                   <v-spacer />
                 </v-card-title>
                 <template>
@@ -59,26 +59,13 @@
                       sm="6"
                     >
                       <p style="font-weight:400;">
-                        {{ quote.service }}: <strong>{{ quote.instance }}</strong>
+                        Date: {{ quote.date }} - Description:  <strong>{{ quote.description }}</strong>
                       </p>
                     </v-col>
-                    <v-col sm="6">
-                      <p style="font-weight:400;">
-                        Provider: <strong>{{ quote.provider }}</strong>
-                      </p>
-                    </v-col>
+
                   </v-row>
                   <v-row style="margin-top: 15px; margin-left: 10px;">
-                    <v-col sm="6">
-                      <p style="font-weight:400;">
-                        Quantity: <strong>{{ quote.quantity }}</strong>
-                      </p>
-                    </v-col>
-                    <v-col sm="6">
-                      <p style="font-weight:400;">
-                        Time to use: <strong>{{ quote.time }}</strong>
-                      </p>
-                    </v-col>
+
                   </v-row>
                   <v-row style=" margin-top: 15px; margin-left: 10px;">
                     <v-col
@@ -151,9 +138,13 @@
 </template>
 
 <script>
-  export default {
-    name: 'Scalability',
-    data: () => ({
+import {QuoteApiService} from '../services/quote.api.service'
+
+export default {
+  name: 'Scalability',
+  data() {
+    return {
+      quoteService: null,
       title: 'Scalability',
       selectServices: '',
       toIncrease: null,
@@ -163,63 +154,17 @@
       services: [
         'Virtual Machine', 'Serverless', 'Data Base',
       ],
-      quotes: [
-        {
-          title: 'Quote Title 1',
-          service: 'Virtual Machine',
-          provider: 'Azure',
-          quantity: '2 Instances',
-          instance: 'VM1',
-          time: '40 Hours',
-          price: 300.00,
-          x: 'aaaa',
-        },
-        {
-          title: 'Quote Title 2',
-          service: 'Serverless',
-          provider: 'IBM',
-          quantity: '2 Instances',
-          time: '10 Hours',
-          instance: 'SL1',
-          price: 100.00,
-        },
-        {
-          title: 'Quote Title 3',
-          service: 'Virtual Machine',
-          provider: 'Oracle',
-          quantity: '2 Instances',
-          instance: 'VM2',
-          time: '30 Hours',
-          price: 300.00,
-        },
-        {
-          title: 'Quote Title 4',
-          service: 'Data Base',
-          provider: 'AWS',
-          quantity: '2 Instances',
-          instance: 'DB1',
-          time: '50 Hours',
-          price: 500.00,
-        },
-        {
-          title: 'Quote Title 5',
-          service: 'Virtual Machine',
-          provider: 'Alibaba',
-          quantity: '2 Instances',
-          instance: 'VM3',
-          time: '25 Hours',
-          price: 30.00,
-        },
-        {
-          title: 'Quote Title 6',
-          service: 'Data Base',
-          provider: 'Azure',
-          quantity: '2 Instances',
-          time: '100 Hours',
-          instance: 'DB2',
-          price: 1500.00,
-        },
-      ],
-    }),
+      quotes: [],
+    }
+  },
+  created() {
+    this.quoteService = new QuoteApiService()
+    this.quoteService.getAll().then((response) => {
+      this.quotes = response.data;
+      console.log(this.quotes)
+    })
+
   }
+
+}
 </script>
