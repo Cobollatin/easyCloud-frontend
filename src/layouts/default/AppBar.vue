@@ -99,9 +99,9 @@
 
     methods: {
       logout: function () {
+        localStorage.removeItem('user')
         this.$router.push('/login')
       },
     },
-
   }
 </script>

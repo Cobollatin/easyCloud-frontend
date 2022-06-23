@@ -5,8 +5,12 @@ export class UsersApiService {
     return http.get(`/users/${email}`)
   }
 
+  login (data) {
+    return http.post('/auth/sign-in', data)
+  }
+
   create (data) {
-    return http.post('/users', data)
+    return http.post('/auth/sign-up', data)
   }
 
   update (id, data) {
@@ -17,3 +21,4 @@ export class UsersApiService {
     return http.delete(`/users/${id}`)
   }
 }
+export default new UsersApiService()
