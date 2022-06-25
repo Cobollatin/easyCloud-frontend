@@ -179,24 +179,7 @@
       }
     },
     computed: {
-      // eslint-disable-next-line vue/return-in-computed-property
-      deleteQuote (id) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.quotesSelected.splice(id)
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.quotes.splice(id)
-        this.quoteService.delete(id)
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.snackBarDrawerDelete = true
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.quotesSelected = this.quotesSelected.map(p => id - p)
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.quotes = this.quotes.map(p => id - p)
-        if (this.quotes.length === 0) {
-          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-          this.snackBarDrawerEmpty = true
-        }
-      },
+     
     },
     created () {
       this.quoteService = new QuoteApiService()
@@ -217,8 +200,6 @@
             var qD = new Date(quote.date)
             var sD = new Date(this.startDate)
             var eD = new Date(this.endDate)
-            console.log(sD <= qD)
-            console.log(qD <= eD)
             console.log(quote)
             if (this.selectServices.includes(quote.cloudService) && sD <= qD) {
               this.quotesSelected.push(quote)
@@ -229,6 +210,17 @@
         if (this.quotesSelected.length === 0) {
           this.snackBarDrawerEmpty = true
         }
+      },
+       deleteQuote (id) {    
+        this.quotesSelected.splice(id)
+        this.quotes.splice(id)
+        this.quoteService.delete(id).then((response) => {
+          console.log(response.data);
+          this.quotes = this.quotes.filter(
+            (t) => t.id !== response.data.id
+          );
+          this.quotesSelected = [];
+        })
       },
     },
   }
