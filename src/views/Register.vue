@@ -132,6 +132,20 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar
+      v-model="snackbarError"
+      color="warning"
+      dark
+      >Something bad happened when trying register
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbarError = false"
+          >Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -149,6 +163,7 @@
       showPassword: false,
       isLoading: false,
       snackbar: false,
+      snackbarError: false,
       form: true,
       rules: {
         fullname: v => !!v || 'Please enter full name',
@@ -172,7 +187,7 @@
           }
           usersApiService.create(User)
             .then((response) => { if (response.status === 200) { this.snackbar = true }; console.log('new user:', response.data) })
-            .catch((e) => { console.log('error', e); console.log('new user', User) })
+            .catch((e) => { console.log('error', e); console.log('new user', User); this.snackbarError = true })
           this.reset()
         }
       },
