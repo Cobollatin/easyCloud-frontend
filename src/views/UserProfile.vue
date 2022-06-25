@@ -50,7 +50,7 @@
 
                 <v-col
                   cols="12"
-                  md="4"
+                  md="6"
                 >
                   <v-text-field
                     v-model="userModify.phone"
@@ -58,7 +58,6 @@
                     label="Phone Number"
                   />
                 </v-col>
-
                 <v-col
                   cols="12"
                   class="text-right"
@@ -113,11 +112,9 @@
 
 <script>
 
-  import { UsersApiService } from '@/services/users.api.service'
-
+  import { UsersApiService } from '../services/users.api.service'
   export default {
     name: 'UserProfileView',
-
     data () {
       return {
         textDrawer: null,
@@ -129,24 +126,21 @@
     },
     created () {
       this.userService = new UsersApiService()
-      this.userService.getByEmail('frcg0303@hotmail.com').then((response) => {
+
+      this.userService.getById(JSON.parse(localStorage.user).id).then((response) => {
         this.userModify = response.data
-        console.log(response)
       })
 
-      this.userService.getByEmail('frcg0303@hotmail.com').then((response) => {
+      this.userService.getById(JSON.parse(localStorage.user).id).then((response) => {
         this.user = response.data
-        console.log(response)
       })
     },
     methods: {
       updateUser () {
-        console.log(this.userModify.name)
         if (this.userModify.name !== '' && this.userModify.email !== '' && this.userModify.number !== '') {
-          this.userService.update(this.userModify.id, this.userModify)
+          this.userService.update(this.user.id, this.userModify)
             .then((response) => {
               this.userModify = response.data
-              console.log(response)
               this.user =
                 {
                   email: response.data.email,

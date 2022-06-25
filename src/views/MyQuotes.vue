@@ -116,9 +116,9 @@
       </v-col>
       <v-expansion-panels>
         <v-expansion-panel
-          style="margin-top: 15px;"
           v-for="quote in quotesSelected"
           :key="quotes.indexOf(quote)"
+          style="margin-top: 15px;"
         >
           <v-expansion-panel-header>
             <v-banner
@@ -128,7 +128,7 @@
                 class="text-h2 font-weight-black"
                 style="color: #0072C3"
               >
-                {{quote.title}} - {{ quote.cloudService }}
+                {{ quote.title }} - {{ quote.cloudService }}
                 <v-spacer />
                 <v-icon
                   color="blue darken-4"
@@ -178,17 +178,36 @@
 
       }
     },
+    computed: {
+      // eslint-disable-next-line vue/return-in-computed-property
+      deleteQuote (id) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.quotesSelected.splice(id)
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.quotes.splice(id)
+        this.quoteService.delete(id)
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.snackBarDrawerDelete = true
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.quotesSelected = this.quotesSelected.map(p => id - p)
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.quotes = this.quotes.map(p => id - p)
+        if (this.quotes.length === 0) {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.snackBarDrawerEmpty = true
+        }
+      },
+    },
     created () {
       this.quoteService = new QuoteApiService()
       this.quoteService.getAll().then((response) => {
-        this.quotes = response.data;
+        this.quotes = response.data
       })
     },
     methods: {
-
       search () {
         this.quotesSelected = []
-        if (this.selectServices.length === 0 ) {
+        if (this.selectServices.length === 0) {
           this.snackBarDrawer = true
           setTimeout(() => {
             this.snackBarDrawer = false
@@ -201,7 +220,7 @@
             console.log(sD <= qD)
             console.log(qD <= eD)
             console.log(quote)
-            if (this.selectServices.includes(quote.cloudService)  && sD <= qD ) {
+            if (this.selectServices.includes(quote.cloudService) && sD <= qD) {
               this.quotesSelected.push(quote)
             }
           })
@@ -211,21 +230,7 @@
           this.snackBarDrawerEmpty = true
         }
       },
-
     },
-    computed:{
-      deleteQuote(id) {
-        this.quotesSelected.splice(id )
-        this.quotes.splice(id)
-        this.quoteService.delete(id)
-        this.snackBarDrawerDelete = true
-        this.quotesSelected = this.quotesSelected.map(p => id - p)
-        this.quotes = this.quotes.map(p => id - p)
-        if(this.quotes.length === 0){
-          this.snackBarDrawerEmpty = true
-        }
-      },
-    }
   }
 </script>
 

@@ -26,6 +26,7 @@
             <v-form
               ref="form"
               v-model="form"
+              lazy-validation
             >
               <v-row
                 align="center"
@@ -81,7 +82,7 @@
                 :disabled="false"
                 :loading="isLoading"
                 color="#1976D2"
-                @click="login(email,password)"
+                @click="login()"
               >
                 <span class="wh">Login</span>
               </v-btn>
@@ -104,10 +105,25 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-snackbar
+      v-model="snackbarError"
+      color="warning"
+      dark
+      >Your Email or Password is incorrect
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbarError = false"
+          >Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
+  import usersApiService, { UsersApiService } from '../services/users.api.service'
   import axios from 'axios'
   export default {
     name: 'Login',
@@ -117,8 +133,9 @@
       email: undefined,
       password: undefined,
       showPassword: false,
-      form: false,
+      form: true,
       isLoading: false,
+      snackbarError: false,
       rules: {
         email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
         length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
@@ -130,20 +147,16 @@
     async mounted () {
     },
     methods: {
-      login: function (email, password) {
-        axios.post(process.env.VUE_APP_FAKE_API + '/api/login', {
-          username: email,
-          password: password,
-        },
-        ).catch(_error => {
-          this.$router.push('/home')
-        })
-          .then(response => {
-            if (response.status === 200) {
-              this.$router.push('/')
-            }
-          },
-          )
+      login () {
+        if (this.$refs.form.validate()) {
+          const User = {
+            email: this.email,
+            password: this.password,
+          }
+          usersApiService.login(User)
+            .then(response => { if (response.status === 200) { this.$router.push('/'); console.log('new user:', response.data); localStorage.setItem('user', JSON.stringify(response.data)); console.log('User log in: ', response.data) } })
+            .catch((e) => { console.log('error', e); console.log('new user', User); this.snackbarError = true })
+        }
       },
     },
   }

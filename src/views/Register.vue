@@ -26,6 +26,7 @@
             <v-form
               ref="form"
               v-model="form"
+              lazy-validation
             >
               <v-row
                 align="center"
@@ -67,7 +68,15 @@
                 required
               />
               <v-text-field
-                v-model="emailaddress"
+                v-model="phone"
+                autocomplete="phone"
+                label="Phone Number"
+                type="number"
+                class="rounded-0"
+                required
+              />
+              <v-text-field
+                v-model="email"
                 autocomplete="emailaddress"
                 :rules="[rules.emailaddress]"
                 label="Email Address"
@@ -91,7 +100,7 @@
                 :loading="isLoading"
                 color="#1976D2"
                 class="margin-t2"
-                @click="login(email,password)"
+                @click="register"
               >
                 <span class="wh">Create your free account</span>
               </v-btn>
@@ -108,11 +117,40 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <v-snackbar
+      v-model="snackbar"
+      color="success"
+      dark
+      >Register completed succesfully
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+          >Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar
+      v-model="snackbarError"
+      color="warning"
+      dark
+      >Something bad happened when trying register
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbarError = false"
+          >Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-  import axios from 'axios'
+  import usersApiService, { UsersApiService } from '../services/users.api.service'
   export default {
     name: 'Login',
     components: {},
@@ -120,11 +158,15 @@
     data: () => ({
       email: undefined,
       password: undefined,
+      fullname: undefined,
+      phone: undefined,
       showPassword: false,
-      form: false,
       isLoading: false,
+      snackbar: false,
+      snackbarError: false,
+      form: true,
       rules: {
-        fullname: v => !!(v || '').match(/@/) || 'Please enter a fullname',
+        fullname: v => !!v || 'Please enter full name',
         length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
         password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
           'Password must contain an upper case letter, a numeric character, and a special character',
@@ -135,20 +177,22 @@
     async mounted () {
     },
     methods: {
-      login: function (email, password) {
-        axios.post(process.env.VUE_APP_FAKE_API + '/api/login', {
-          username: email,
-          password: password,
-        },
-        ).catch(_error => {
-          this.$router.push('/home')
-        })
-          .then(response => {
-            if (response.status === 200) {
-              this.$router.push('/')
-            }
-          },
-          )
+      register () {
+        if (this.$refs.form.validate()) {
+          const User = {
+            name: this.fullname,
+            phone: this.phone,
+            email: this.email,
+            password: this.password,
+          }
+          usersApiService.create(User)
+            .then((response) => { if (response.status === 200) { this.snackbar = true }; console.log('new user:', response.data) })
+            .catch((e) => { console.log('error', e); console.log('new user', User); this.snackbarError = true })
+          this.reset()
+        }
+      },
+      reset () {
+        this.$refs.form.reset()
       },
     },
   }

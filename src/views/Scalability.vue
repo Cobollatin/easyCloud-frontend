@@ -50,7 +50,7 @@
                   class="text-h2 font-weight-black"
                   style="color: #0072C3"
                 >
-                  {{ quote.title }} - {{ quote.cloudService}}
+                  {{ quote.title }} - {{ quote.cloudService }}
                   <v-spacer />
                 </v-card-title>
                 <template>
@@ -62,11 +62,8 @@
                         Date: {{ quote.date }} - Description:  <strong>{{ quote.description }}</strong>
                       </p>
                     </v-col>
-
                   </v-row>
-                  <v-row style="margin-top: 15px; margin-left: 10px;">
-
-                  </v-row>
+                  <v-row style="margin-top: 15px; margin-left: 10px;" />
                   <v-row style=" margin-top: 15px; margin-left: 10px;">
                     <v-col
                       sm="3"
@@ -138,33 +135,30 @@
 </template>
 
 <script>
-import {QuoteApiService} from '../services/quote.api.service'
-
-export default {
-  name: 'Scalability',
-  data() {
-    return {
-      quoteService: null,
-      title: 'Scalability',
-      selectServices: '',
-      toIncrease: null,
-      time: null,
-      period: null,
-      selectProviders: [],
-      services: [
-        'Virtual Machine', 'Serverless', 'Data Base',
-      ],
-      quotes: [],
-    }
-  },
-  created() {
-    this.quoteService = new QuoteApiService()
-    this.quoteService.getAll().then((response) => {
-      this.quotes = response.data;
-      console.log(this.quotes)
-    })
-
+  import { QuoteApiService } from '../services/quote.api.service'
+  export default {
+    name: 'Scalability',
+    data () {
+      return {
+        quoteService: null,
+        title: 'Scalability',
+        selectServices: '',
+        toIncrease: null,
+        time: null,
+        period: null,
+        selectProviders: [],
+        services: [
+          'Virtual Machine', 'Serverless', 'Data Base',
+        ],
+        quotes: [],
+      }
+    },
+    created () {
+      this.quoteService = new QuoteApiService()
+      this.quoteService.getAll().then((response) => {
+        this.quotes = response.data
+        console.log(this.quotes)
+      })
+    },
   }
-
-}
 </script>
