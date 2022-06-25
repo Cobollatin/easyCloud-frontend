@@ -631,8 +631,7 @@
       }
     },
     methods: {
-      
-      cancelSaveQuote() {
+      cancelSaveQuote () {
         this.quoteSaved = {}
         this.openDialog = false
       },

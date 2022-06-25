@@ -68,7 +68,7 @@
 
 <script>
 
-  import {QuoteApiService} from "@/services/quote.api.service";
+  import { QuoteApiService } from '@/services/quote.api.service'
 
   export default {
     name: 'Home',
@@ -137,7 +137,7 @@
     created () {
       this.quoteService = new QuoteApiService()
       this.quoteService.getAll().then((response) => {
-        this.items = response.data;
+        this.items = response.data
       })
     },
   }

@@ -6,11 +6,11 @@ export class UsersApiService {
   }
 
   login (data) {
-    return http.post('/auth/sign-in', data)
+    return http.post('/users/auth/sign-in', data)
   }
 
   create (data) {
-    return http.post('/auth/sign-up', data)
+    return http.post('/users/auth/sign-up', data)
   }
 
   update (id, data) {
