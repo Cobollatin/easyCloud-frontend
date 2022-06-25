@@ -105,6 +105,20 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-snackbar
+      v-model="snackbarError"
+      color="warning"
+      dark
+      >Your Email or Password is incorrect
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbarError = false"
+          >Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -121,6 +135,7 @@
       showPassword: false,
       form: true,
       isLoading: false,
+      snackbarError: false,
       rules: {
         email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
         length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
@@ -140,7 +155,7 @@
           }
           usersApiService.login(User)
             .then(response => { if (response.status === 200) { this.$router.push('/'); console.log('new user:', response.data); localStorage.setItem('user', JSON.stringify(response.data)); console.log('User log in: ', response.data) } })
-            .catch((e) => { console.log('error', e); console.log('new user', User) })
+            .catch((e) => { console.log('error', e); console.log('new user', User); this.snackbarError = true })
         }
       },
     },
