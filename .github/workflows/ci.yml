@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - angular-develop
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - angular-develop
+
+jobs:
+  build_and_test:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: CI
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.15.1
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build --prod
+
